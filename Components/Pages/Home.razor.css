@@ -1,0 +1,118 @@
+﻿/* General */
+
+.container {
+    max-width: 120rem;
+    padding: 0 6rem;
+    margin: 0 auto;
+}
+
+.grid {
+    display: grid;
+    column-gap: 4rem;
+    row-gap: 8rem;
+    /* margin-bottom: 9.6rem; */
+}
+
+    /* .grid:last-child {
+  margin-bottom: 0;
+} */
+
+.grid:not(:last-child) {
+    margin-bottom: 9.6rem;
+}
+
+.grid--2-cols {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.grid--3-cols {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.grid--4-cols {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.subheading {
+    display: block;
+    font-size: 16px;
+    font-weight: 500;
+    color: #004E98;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    letter-spacing: 0.75px;
+}
+
+/* Cards Section */
+
+.section-hero {
+    margin-top: -1px;
+
+}
+
+.section-hero .hero {
+    height: 100vh;
+    display: flex;
+}
+
+.section-hero .hero img {
+    width: 100%;
+}
+
+/* Cards Section */
+
+.section-cards {
+    padding: 6rem 0;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.cards {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cards-primary {
+    font-size: 48px;
+    margin-bottom: 1rem;
+}
+
+.cards-description {
+    font-size: 20px;
+    margin-bottom: 4rem;
+}
+
+.section-cards .card {
+    overflow: hidden;
+    border-radius: 1rem;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s;
+}
+
+.section-cards .card:hover {
+    transform: translateY(-1.2rem);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.section-cards .card img {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.club-info {
+    display: block;
+    padding: 1rem 1.2rem 1.2rem 2rem;
+}
+
+.club-name {
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.club-description {
+    font-size: 16px;
+}
