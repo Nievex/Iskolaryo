@@ -1,0 +1,29 @@
+name: Iskolaryo
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+  
+jobs:
+  deploy-to-github-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 8.0.x
+      - name: Install .NET WASM Build Tools
+        run: dotnet workload install wasm-tools
+      - name: Publish .NET Core Project
+        run: cd App.Client; dotnet publish -c:Release -p:GHPages=true -o ../dist/Web --nologo
+      - name: Commit wwwroot to GitHub Pages
+        uses: Nievex/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: dist/Web/wwwroot
