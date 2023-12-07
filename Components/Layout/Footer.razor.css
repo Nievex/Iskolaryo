@@ -9,13 +9,17 @@
     display: grid;
     column-gap: 4rem;
     row-gap: 4rem;
-    /* margin-bottom: 9.6rem; */
 }
 
 /* Footer Section */
-
 .footer {
     padding: 2rem 0;
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.footer-line {
     border-top: 1px solid #eee;
 }
 

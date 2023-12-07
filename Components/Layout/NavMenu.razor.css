@@ -59,7 +59,7 @@
     display: inline-block;
     text-decoration: none;
     font-weight: 500;
-    font-size: 1.1rem;
+    font-size: 20px;
     transition: all 0.3s;
 }
 
@@ -69,11 +69,10 @@
     border-radius: 0.5rem;
 }
 
-    .nav-link.profile:hover,
-    .nav-link.profile:hover {
-        background: #FF6C0A;
-        color: #fff;
-    }
+.nav-link.profile:hover {
+    background: #FF6C0A;
+    color: #fff;
+}
 
 .nav-link:hover,
 .nav-link:active {
