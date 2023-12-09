@@ -1,6 +1,16 @@
-﻿@page "/"
+﻿@page "/home"
+@using Microsoft.AspNetCore.Components.Authorization
 
 <PageTitle>Iskolaryo</PageTitle>
+<AuthorizeView Roles="User,Admin">
+    <Authorized>
+        <p>Authorized</p>
+    </Authorized>
+    <NotAuthorized>
+        <p>Not Authorized</p>
+    </NotAuthorized>
+</AuthorizeView>
+
 <header>
     <section class="section-hero">
         <div class="hero">
