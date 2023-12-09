@@ -1,0 +1,8 @@
+﻿.main {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+
+	height: 100vh;
+
+	background-color: black
+}
