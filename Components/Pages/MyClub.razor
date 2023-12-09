@@ -1,0 +1,80 @@
+﻿@page "/myclub"
+
+<PageTitle>My Club</PageTitle>
+
+<section class="myclub-hero-section">
+    <div class="hero">
+        <img src="/images/gamedevbanner.png" />
+    </div>
+</section>
+
+<div class="center-text container">
+    <span class="subheading">CLUB</span>
+    <h1 class="primary">Game Development</h1>
+    <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin venenatis risus velit, vitae dignissim eros ultricies non. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Morbi metus neque, finibus a nunc ut, commodo venenatis magna.</p>
+</div>
+
+
+<section class="myclub-section">
+    <div class="messages-container">
+        <div class="club-messages-header clubs-header">
+            <p>Messages</p>
+        </div>
+
+        <div class="user-message-card">
+            <div class="fixed-height">
+                <div class="user-profile">
+                    <img class="user-img" src="/images/profile.svg" />
+                    <p class="username">Juan Dela Cruz</p>
+                    <p class="user-role">Club Member</p>
+                </div>
+            </div>
+            <div class="message-content">
+                <p class="message">Nunc facilisis nulla at metus scelerisque egestas. Maecenas ut laoreet nulla. Nunc rhoncus lacus ut mattis hendrerit. Donec at placerat tellus, quis rhoncus ex. Praesent ultrices at mi a sodales.</p>
+                <p class="date">December 25, 2023</p>
+            </div>
+        </div>
+
+        <div class="user-message-card">
+            <div class="fixed-height">
+                <div class="user-profile">
+                    <img class="user-img" src="/images/profile.svg" />
+                    <p class="username">Juswa Paige</p>
+                    <p class="user-role">Club Member</p>
+                </div>
+            </div>
+            <div class="message-content">
+                <p class="message">Nunc facilisis nulla at metus scelerisque egestas. Maecenas ut laoreet nulla. Nunc rhoncus lacus ut mattis hendrerit. Donec at placerat tellus, quis rhoncus ex. Praesent ultrices at mi a sodales.</p>
+                <p class="date">December 25, 2023</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="reply-section">
+    <div class="reply-container">
+        <div class="reply-header clubs-header">
+            <p>Reply</p>
+        </div>
+
+        <div class="user-reply">
+            <div class="fixed-height">
+                <div class="user-profile">
+                    <img class="user-img" src="/images/profile.svg" />
+                    <p class="username">Current User</p>
+                    <p class="user-role">Club Member</p>
+                </div>
+            </div>
+
+            <div class="reply-inputs">
+                <textarea class="reply-fld" placeholder="Write something..."></textarea>
+                <input type="submit" class="submit-btn" value="Submit" />
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+
+}

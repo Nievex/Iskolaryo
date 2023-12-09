@@ -3,7 +3,9 @@
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
+    max-width: 1280px;
     padding: 0 2rem;
+    margin: 0 auto;
 }
 
 .nav-menu-logo .logo{
@@ -58,13 +60,13 @@
     color: #fff;
     display: inline-block;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 300;
     font-size: 20px;
     transition: all 0.3s;
 }
 
 .nav-link.profile {
-    background: #FF8533;
+    background: #70A9A1;
     padding: 0.8rem 2rem;
     border-radius: 0.5rem;
 }

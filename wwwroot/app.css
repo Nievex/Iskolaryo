@@ -101,3 +101,11 @@ a {
     text-decoration: none;
     color: #555;
 }
+
+.clubs-header {
+    padding: 1.5rem 2rem;
+}
+
+.fixed-height {
+    height: 100%;
+}
