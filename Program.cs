@@ -1,7 +1,10 @@
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
+using Iskolaryo.Auth;
 using Iskolaryo.Components;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +21,15 @@ builder.Services
     )
     .AddBootstrapProviders()
     .AddFontAwesomeIcons();
+
+builder.Services.AddServerSideBlazor();
+
+builder.Services.AddAuthenticationCore();
+builder.Services.AddScoped<ProtectedSessionStorage>();
+builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
+builder.Services.AddSingleton<UserAccountService>();
+builder.Services.AddCascadingAuthenticationState();
+
 
 var app = builder.Build();
 
