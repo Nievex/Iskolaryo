@@ -3,6 +3,7 @@ using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
 using Iskolaryo.Auth;
 using Iskolaryo.Components;
+using Iskolaryo.Database;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 
@@ -28,6 +29,7 @@ builder.Services.AddAuthenticationCore();
 builder.Services.AddScoped<ProtectedSessionStorage>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
 builder.Services.AddSingleton<UserAccountService>();
+builder.Services.AddSingleton<DatabaseAccess>();
 builder.Services.AddCascadingAuthenticationState();
 
 
