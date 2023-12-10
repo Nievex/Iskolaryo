@@ -1,0 +1,58 @@
+﻿/* Hero Section */
+
+.section-hero {
+    margin-top: -1px;
+}
+
+.section-hero .hero img {
+    height: 100%;
+    width: 100%;
+}
+
+/* Cards Section */
+
+.section-cards {
+    padding: 8rem 0;
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cards {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4rem;
+}
+
+.section-cards .card {
+    overflow: hidden;
+    border-radius: 1rem;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s;
+}
+
+.section-cards .card:hover {
+    transform: translateY(-1.2rem);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.section-cards .card img {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.club-info {
+    display: block;
+    padding: 1rem 1.2rem 1.2rem 2rem;
+}
+
+.club-name {
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.club-description {
+    font-size: 16px;
+}
