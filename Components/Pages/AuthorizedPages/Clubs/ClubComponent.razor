@@ -1,0 +1,23 @@
+﻿@using System.ComponentModel.DataAnnotations
+<div class="clubs-card">
+    <img src="/images/club.svg" class="club-icon" />
+    <div class="club-info">
+        <p class="club-name">@Club.Name</p>
+        <p class="club-description">@Club.Description</p>
+    </div>
+    <div class="message-count">
+        <p>128 Messages</p>
+    </div>
+
+    <div class="moderator">
+        <img src="images/profile.svg" class="moderator-picture" />
+        <p class="moderator-name">@Club.Moderator.Name</p>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    [Required]
+    public Club Club { get; set; }
+    
+}
