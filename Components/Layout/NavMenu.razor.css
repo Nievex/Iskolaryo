@@ -38,7 +38,7 @@
 }
 
 .nav-menu-search-bar input {
-    font-size: 1rem;
+    font-size: 18px;
     border: none;
     margin-left: 1rem;
     width: 100%;
@@ -72,11 +72,11 @@
 }
 
 .nav-link.profile:hover {
-    background: #FF6C0A;
+    background: #548C85;
     color: #fff;
 }
 
 .nav-link:hover,
 .nav-link:active {
-        color: #FF8533;
+        color: #8CBAB4;
 }

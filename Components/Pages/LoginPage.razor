@@ -9,13 +9,37 @@
 @inject UserAccountService UserAccountService
 @inject NavigationManager NavigationManager
 
-<div class="login-card">
-    <input @bind-value="Username" type="text" placeholder="Username" />"
-    <input @bind-value="Password" type="text" placeholder="Password" />"
-<button @onclick="Login">Login</button>
+<section class="login-section">
+    <div class="login-container">
+        <div class="login-flex">
+            <div class="left-panel">
 
-</div>
+                <div class="logo">
+                    <img src="/images/black-logo.svg" />
+                    <h2 class="typography">ISKOLARYO</h2>
+                </div>
 
+                <div class="input-field">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <input @bind-value="Username" type="text" placeholder="Username" class="username-txt" name="username" />
+                </div>
+                <div class="input-field">
+                    <i class="fa fa-lock" aria-hidden="true"></i>
+                    <input @bind-value="Password" type="password" placeholder="Password" class="password-txt" name="password" />
+                </div>
+                <button @onclick="Login" class="submit-btn">Login</button>
+
+                <div class="sign-up">
+                    <p>Don't have an account? <a href="#" class="signup-link">Sign up</a></p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="right-panel">
+        </div>
+    </div>
+</section>
 
 @code {
     public string Username { get; set; }

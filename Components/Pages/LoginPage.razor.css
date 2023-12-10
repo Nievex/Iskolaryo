@@ -1,2 +1,124 @@
-﻿body {
+﻿.login-section {
+    background-image: url("/images/login-background.png");
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    background: #FFFFFF;
+    border-radius: 10px;
+    height: 530px;
+    width: 800px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    overflow: hidden;
+    transition: all 0.3s;
+}
+
+.login-container:hover {
+    transform: scale(103%);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    border: 0;
+    outline: none;
+}
+
+.login-flex {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 3rem;
+}
+
+.login-flex .left-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    height: 100%;
+}
+
+.sign-up {
+    justify-self: flex-end;
+}
+
+.sign-up a {
+    color: #70A9A1;
+    transition: all 0.3s;
+}
+
+.sign-up a:hover {
+    color: #5C9991;
+}
+
+.logo {
+    display: flex;
+    justify-self: flex-start;
+    align-items: center;
+    gap: 1rem;
+    margin: 3rem 0 3rem 0;
+}
+
+.logo img {
+    width: 86px;
+}
+
+.logo h2 {
+    font-size: 28px;
+    letter-spacing: 2px;
+    font-weight: 300;
+}
+
+.input-field {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #555555;
+}
+
+.username-txt,
+.password-txt {
+    font-size: 18px;
+    width: 100%;
+    padding: 12px 20px;
+    border: 0;
+    transition: all 0.3s;
+}
+
+.username-txt:focus,
+.password-txt:focus {
+    outline: none;
+}
+
+.submit-btn {
+    background-color: #70A9A1;
+    color: #FFFFFF;
+    padding: 14px 20px;
+    font-size: 18px;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 100%;
+
+    margin-bottom: 4rem;
+}
+
+.submit-btn:hover {
+    background-color: #548C85;
+}
+
+.right-panel {
+    background-image: url("/images/right-panel.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
