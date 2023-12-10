@@ -1,0 +1,231 @@
+﻿@page "/myevents"
+
+<PageTitle>My Events</PageTitle>
+
+<section class="calendar-section">
+    <div class="calendar-container">
+        <div class="calendar-main-component">
+            <div class="left-panel">
+                <div class="months">
+                    <button class="left-btn"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
+                    <div class="month">january</div>
+                    <button class="right-btn"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+                </div>
+                <div class="day-label">
+                    <div class="weekday">Sun</div>
+                    <div class="weekday">Mon</div>
+                    <div class="weekday">Tue</div>
+                    <div class="weekday">Wed</div>
+                    <div class="weekday">Thu</div>
+                    <div class="weekday">Fri</div>
+                    <div class="weekday">Sat</div>
+                </div>
+                <div class="days">
+                    <div class="day"></div>
+                    <div class="day"></div>
+                    <div class="day">1</div>
+                    <div class="day">2</div>
+                    <div class="day">3</div>
+                    <div class="day">4</div>
+                    <div class="day">5</div>
+                    <div class="day">6</div>
+                    <div class="day">7</div>
+                    <div class="day">8</div>
+                    <div class="day">9</div>
+                    <div class="day">10</div>
+                    <div class="day">11</div>
+                    <div class="day">12</div>
+                    <div class="day">13</div>
+                    <div class="day">14</div>
+                    <div class="day">15</div>
+                    <div class="day">16</div>
+                    <div class="day">17</div>
+                    <div class="day">18</div>
+                    <div class="day">19</div>
+                    <div class="day">20</div>
+                    <div class="day">21</div>
+                    <div class="day">22</div>
+                    <div class="day">23</div>
+                    <div class="day">24</div>
+                    <div class="day">25</div>
+                    <div class="day">26</div>
+                    <div class="day">27</div>
+                    <div class="day">28</div>
+                    <div class="day">29</div>
+                    <div class="day">30</div>
+                    <div class="day">31</div>
+                    <div class="day"></div>
+                    <div class="day"></div>
+
+                </div>
+            </div>
+            <div class="right-panel">
+                <div class="event-header">
+                    <h1>Events</h1>
+                </div>
+                <div class="events-container" id="event-scrollbar">
+
+                    <div class="event">
+                        <div class="time-date">
+                            <p class="date">Jan 1, 2024</p>
+                            <p class="time">11:00 AM</p>
+                        </div>
+                        <p class="event-name">School Event</p>
+                        <input type="checkbox" class="event-chk" id="event" />
+                    </div>
+
+                    <div class="event">
+                        <div class="time-date">
+                            <p class="date">Jan 1, 2024</p>
+                            <p class="time">11:00 AM</p>
+                        </div>
+                        <p class="event-name">Testing kung masisira ba yung layout kapag mahaba yung event name</p>
+                        <input type="checkbox" class="event-chk" id="event" />
+                    </div>
+
+                    <div class="event">
+                        <div class="time-date">
+                            <p class="date">Jan 1, 2024</p>
+                            <p class="time">11:00 AM</p>
+                        </div>
+                        <p class="event-name">School Event</p>
+                        <input type="checkbox" class="event-chk" id="event" />
+                    </div>
+
+                    <div class="event">
+                        <div class="time-date">
+                            <p class="date">Jan 1, 2024</p>
+                            <p class="time">11:00 AM</p>
+                        </div>
+                        <p class="event-name">School Event</p>
+                        <input type="checkbox" class="event-chk" id="event" />
+                    </div>
+
+                    <div class="event">
+                        <div class="time-date">
+                            <p class="date">Jan 1, 2024</p>
+                            <p class="time">11:00 AM</p>
+                        </div>
+                        <p class="event-name">School Event</p>
+                        <input type="checkbox" class="event-chk" id="event" />
+                    </div>
+
+                    <div class="event">
+                        <div class="time-date">
+                            <p class="date">Jan 1, 2024</p>
+                            <p class="time">11:00 AM</p>
+                        </div>
+                        <p class="event-name">School Event</p>
+                        <input type="checkbox" class="event-chk" id="event" />
+                    </div>
+
+                </div>
+                <div class="buttons">
+                    <input type="button" value="Cancel" class="cancel-btn" />
+                    <input type="button" value="Add to schedule" class="attend-btn" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="center-text container">
+        <span class="subheading">EVENTS</span>
+        <h1 class="primary">Ongoing Events</h1>
+        <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin venenatis risus velit, vitae dignissim eros ultricies non. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Morbi metus neque, finibus a nunc ut, commodo venenatis magna.</p>
+    </div>
+
+    <div class="events-list-container">
+        <div class="events-list">
+            <div class="events-list-header clubs-header">
+                <p>Events</p>
+            </div>
+
+            <div class="events-card">
+                <img src="/images/event.svg" class="event-icon" />
+                <div class="event-info">
+                    <p class="event-name">School Event</p>
+                    <p class="event-description">Lorem ipsum event</p>
+                </div>
+                <div class="message-count">
+                    <p>128 Messages</p>
+                </div>
+
+                <div class="moderator">
+                    <img src="images/profile.svg" class="moderator-picture" />
+                    <p class="moderator-name">Profile Account</p>
+                </div>
+            </div>
+
+            <div class="events-card">
+                <img src="/images/event.svg" class="event-icon" />
+                <div class="event-info">
+                    <p class="event-name">School Event</p>
+                    <p class="event-description">Lorem ipsum event</p>
+                </div>
+                <div class="message-count">
+                    <p>128 Messages</p>
+                </div>
+
+                <div class="moderator">
+                    <img src="images/profile.svg" class="moderator-picture" />
+                    <p class="moderator-name">Profile Account</p>
+                </div>
+            </div>
+
+            <div class="events-card">
+                <img src="/images/event.svg" class="event-icon" />
+                <div class="event-info">
+                    <p class="event-name">School Event</p>
+                    <p class="event-description">Lorem ipsum event</p>
+                </div>
+                <div class="message-count">
+                    <p>128 Messages</p>
+                </div>
+
+                <div class="moderator">
+                    <img src="images/profile.svg" class="moderator-picture" />
+                    <p class="moderator-name">Profile Account</p>
+                </div>
+            </div>
+
+            <div class="events-card">
+                <img src="/images/event.svg" class="event-icon" />
+                <div class="event-info">
+                    <p class="event-name">School Event</p>
+                    <p class="event-description">Lorem ipsum event</p>
+                </div>
+                <div class="message-count">
+                    <p>128 Messages</p>
+                </div>
+
+                <div class="moderator">
+                    <img src="images/profile.svg" class="moderator-picture" />
+                    <p class="moderator-name">Profile Account</p>
+                </div>
+            </div>
+            <div class="events-card">
+                <img src="/images/event.svg" class="event-icon" />
+                <div class="event-info">
+                    <p class="event-name">School Event</p>
+                    <p class="event-description">Lorem ipsum event</p>
+                </div>
+                <div class="message-count">
+                    <p>128 Messages</p>
+                </div>
+
+                <div class="moderator">
+                    <img src="images/profile.svg" class="moderator-picture" />
+                    <p class="moderator-name">Profile Account</p>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</section>
+
+
+
+@code {
+
+}
