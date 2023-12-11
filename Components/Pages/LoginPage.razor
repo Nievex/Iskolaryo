@@ -22,11 +22,11 @@
 
                 <div class="input-field">
                     <i class="fa fa-user" aria-hidden="true"></i>
-                    <input @bind-value="Username" type="text" placeholder="Username" class="username-txt" name="username" />
+                    <input @bind-value="Username" @bind-value:event="oninput" type="text" @onkeydown="@Enter" placeholder="Username" class="username-txt" name="username" />
                 </div>
                 <div class="input-field">
                     <i class="fa fa-lock" aria-hidden="true"></i>
-                    <input @bind-value="Password" type="password" placeholder="Password" class="password-txt" name="password" />
+                    <input @bind-value="Password" type="password" @bind-value:event="oninput" @onkeydown="@Enter" placeholder="Password" class="password-txt" name="password" />
                 </div>
                 <button @onclick="Login" class="submit-btn">Login</button>
 
