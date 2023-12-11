@@ -1,4 +1,5 @@
-﻿using Iskolaryo.Database;
+﻿using Iskolaryo.Components.Pages.AuthorizedPages.Clubs;
+using Iskolaryo.Database;
 
 namespace Iskolaryo.Auth
 {
@@ -17,5 +18,6 @@ namespace Iskolaryo.Auth
         {
             return _userAccounts.FirstOrDefault(u => u.Username == username);
         }
+
     }
 }

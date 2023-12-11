@@ -1,4 +1,18 @@
 ﻿@page "/profile"
+@using Iskolaryo.Components.Pages.AuthorizedPages.Clubs
+@using Microsoft.AspNetCore.Components.Authorization
+@using Iskolaryo.Auth
+@using Iskolaryo.Database
+
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
+@inject MemberDatabaseAccess memberDatabaseAccess
+
+<AuthorizeView Roles="User,Admin">
+    <NotAuthorized>
+        <RedirectToLogin />
+    </NotAuthorized>
+</AuthorizeView>
 
 <PageTitle>Profile</PageTitle>
 
@@ -13,33 +27,40 @@
             </div>
 
             <div class="right-panel">
-                <p class="name">Name: <span>Testing sa mahabang name Testing sa mahabang name Testing sa mahabang name Testing sa mahabang name Testing sa mahabang name</span></p>
-                <p class="student-number">Student number: <span>22-2023</span></p>
-                <p class="email">Email: <span>username@gmail.com</span></p>
-                <p class="phone-number">Phone number: <span>09123123123</span></p>
+                <p class="name">Name: <span>@currentUser?.Name</span></p>
+                <p class="student-number">Student number: <span>@currentUser?.ID</span></p>
+                <p class="email">Email: <span>@currentUser?.Email</span></p>
+                <p class="phone-number">Phone number: <span>@currentUser?.ContactNumber</span></p>
 
-                <input type="button" class="logout-btn" value="Logout" />
+                <input type="button" @onclick="Logout" class="logout-btn" value="Logout" />
             </div>
         </div>
 
         <h1>Club joined</h1>
         <div class="current-club">
-            
-            <div class="club-img">
-                <img src="/images/club.svg" class="club"/>
-            </div>
+            @if(currentUser!.Club == null)
+            {
+                <div class="club-info">
+                    <p class="club-name">No Clubs joined!</p>
+                </div>
+            } else
+            {
+                <div class="club-img">
+                    <img src="/images/club.svg" class="club" />
+                </div>
 
-            <div class="club-info">
-                <p class="club-name">Ordinary Club</p>
-                <p class="club-description">Lorem ipsum club</p>
-            </div>
+                <div class="club-info">
+                    <p class="club-name">@currentUser!.Club.Name</p>
+                    <p class="club-description">@currentUser!.Club.Description</p>
+                </div>
 
-            <div class="leave-btn-container">
-                <input type="button" value="Leave" class="leave-btn" />
-            </div>
-
+                <div class="leave-btn-container">
+                    <input type="button" value="Leave" class="leave-btn" />
+                </div>
+            }
         </div>
 
+            
         <h1>Edit profile</h1>
         <div class="info-container">
             <div class="img-container">
@@ -50,18 +71,18 @@
             <div class="update-container">
 
                 <p>Email: </p>
-                <input type="text" placeholder="New email" class="update-field" />
+                <input type="text" @bind-value="Email" @bind-value:event="oninput" placeholder="New email" class="update-field" />
 
                 <p>Phone number: </p>
-                <input type="text" placeholder="New phone number" class="update-field" />
+                <input type="text" @bind-value="PhoneNumber" @bind-value:event="oninput" placeholder="New phone number" class="update-field" />
 
                 <p>Old password: </p>
-                <input type="password" class="update-field" />
+                <input type="password" @bind-value="OldPassword" @bind-value:event="oninput" class="update-field" />
 
                 <p>New password: </p>
-                <input type="password" class="update-field" />
+                <input type="password" @bind-value="NewPassword" @bind-value:event="oninput" class="update-field" />
 
-                <input type="button" value="Update" class="update-btn" />
+                <input type="button" @onclick="Update" value="Update" class="update-btn" />
             </div>
 
         </div>
@@ -69,5 +90,41 @@
 </section>
 
 @code {
+    private Member? currentUser; 
 
+    private string Email { get; set; }
+    private string PhoneNumber { get; set; }
+    private string OldPassword { get; set; }
+    private string NewPassword { get; set; }
+
+    protected override void OnInitialized()
+    {
+        currentUser = LoggedUserSingleton.LoggedUser;
+
+    }
+
+    private async Task Update()
+    {
+        string oldPassword = await memberDatabaseAccess.GetMemberPassword(currentUser!.ID);
+        Console.WriteLine(oldPassword);
+        if (OldPassword != oldPassword)
+        {
+            Console.WriteLine("Invalid Password");
+            Email = "";
+            PhoneNumber = "";
+            OldPassword = "";
+            NewPassword = "";
+            return;
+        }
+        await memberDatabaseAccess.UpdateMemberDetails(currentUser.ID, Email, PhoneNumber, NewPassword);
+        Console.WriteLine("Done!");
+    }
+
+    private async Task Logout()
+    {
+        var customAuthStateProvider = (CustomAuthStateProvider)AuthenticationStateProvider;
+        await customAuthStateProvider.UpdateAuthenticationState(null);
+        NavigationManager.NavigateTo("/login", true);
+
+    }
 }

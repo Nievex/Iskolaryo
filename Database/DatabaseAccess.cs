@@ -31,12 +31,21 @@ namespace Iskolaryo.Database
             }
         }
 
-
-        public Task ExecuteSQL<T>(string sql, T parameters, string connectionString)
+        public async Task<T> LoadData<T, U>(string sql, U parameters, string connectionString)
         {
             using(IDbConnection connection = new MySqlConnection(connectionString))
             {
-                return connection.ExecuteAsync(sql, parameters);
+                var dataList = await connection.QueryAsync<T>(sql, parameters).ConfigureAwait(false);
+                return dataList.FirstOrDefault();
+            }
+        }
+
+        public async Task ExecuteSQL<T>(string sql, T parameters, string connectionString)
+        {
+
+            using (IDbConnection connection = new MySqlConnection(connectionString))
+            {
+                await connection.ExecuteAsync(sql, parameters).ConfigureAwait(false);
             }
         }
     }

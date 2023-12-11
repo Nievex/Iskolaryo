@@ -12,6 +12,7 @@
         public string Email { get; set; }
         public string ContactNumber { get; set; }
         public string Role { get; set; }
+        public Club? Club { get; set; }
 
     }
 }

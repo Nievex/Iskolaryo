@@ -23,13 +23,17 @@ builder.Services
     .AddBootstrapProviders()
     .AddFontAwesomeIcons();
 
+builder.Services.AddSignalR(builder => builder.MaximumReceiveMessageSize = 1000000000);
+
 builder.Services.AddServerSideBlazor();
 
 builder.Services.AddAuthenticationCore();
 builder.Services.AddScoped<ProtectedSessionStorage>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
-builder.Services.AddSingleton<UserAccountService>();
+builder.Services.AddScoped<UserAccountService>();
 builder.Services.AddSingleton<DatabaseAccess>();
+builder.Services.AddSingleton<MemberDatabaseAccess>();
+builder.Services.AddSingleton<LoggedUserSingleton>();
 builder.Services.AddCascadingAuthenticationState();
 
 

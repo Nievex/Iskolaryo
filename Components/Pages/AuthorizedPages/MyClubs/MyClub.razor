@@ -7,6 +7,7 @@
 @inject DatabaseAccess _dbAccess
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IConfiguration _config;
+@inject LoggedUserSingleton __usersingleton
 
 <PageTitle>My Club</PageTitle>
 
@@ -96,15 +97,13 @@
     private List<MessageCard> _messageCardList = new List<MessageCard>();
     private string? message;
 
-    public Member? currentMember;
+    public Member currentMember;
 
     protected async override Task OnInitializedAsync()
     {
-        var customAuthStateProvider = (CustomAuthStateProvider)AuthenticationStateProvider;
-        var userSessionState = await customAuthStateProvider.GetAuthenticationStateAsync();
-        string userSessionUsername = userSessionState.User.Identity!.Name!;
+        currentMember = LoggedUserSingleton.LoggedUser;
 
-        var queryResult = await _dbAccess.LoadDataAsList<Member, dynamic>($"SELECT * FROM users WHERE Username = '{userSessionUsername}'", new { }, _config.GetConnectionString("users"));
+        var queryResult = await _dbAccess.LoadDataAsList<Member, dynamic>($"SELECT * FROM users WHERE ID = '{currentMember.ID}'", new { }, _config.GetConnectionString("users"));
         currentMember = queryResult.ToList()[0];
     }
 
