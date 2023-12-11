@@ -1,0 +1,93 @@
+﻿.admin-accounts-section {
+    margin: 0 auto;
+}
+
+.admin-accounts-container {
+    margin-bottom: 4rem;
+    display: grid;
+    grid-template-columns: 6fr 2fr;
+}
+
+.data-container {
+    height: 100vh;
+    overflow-y: auto;
+    margin: 0 auto;
+    border-bottom: 1px solid black;
+}
+
+.data-container table, th, td {
+    border: 1px solid;
+    width: 90%;
+    text-align: center;
+}
+
+.data-container table {
+    border-collapse: collapse; 
+}
+
+.data-container th,
+.data-container td {
+    padding: 12px 6px;
+}
+
+.update-fields {
+    padding: 0 1rem;
+}
+
+.update-fields h1 {
+    padding: 1rem 0;
+}
+
+.update-fields p {
+    font-size: 16px;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.update-fields input[type=text] {
+    padding: 5px 10px;
+    font-size: 16px;
+    width: 100%;
+}
+
+.update-btn {
+    background-color: #70A9A1;
+    color: #FFFFFF;
+    padding: 12px 20px;
+    font-size: 18px;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 1rem;
+
+    justify-self: flex-end;
+    grid-column: 2;
+    grid-row: 5;
+}
+
+.update-btn:hover {
+    background-color: #548C85;
+}
+
+.delete-btn {
+    background-color: #F03e3e;
+    color: #FFFFFF;
+    padding: 12px 20px;
+    font-size: 18px;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 1rem;
+    justify-self: flex-end;
+    grid-column: 2;
+    grid-row: 5;
+}
+
+.delete-btn:hover {
+    background-color: #e03131;
+}

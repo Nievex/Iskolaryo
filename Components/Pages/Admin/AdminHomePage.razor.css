@@ -1,0 +1,75 @@
+﻿.admin-container {
+    max-width: 1280px;
+    padding: 4rem 6rem;
+    margin: 0 auto;
+}
+
+.admin-dashboard-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 4rem 8rem 4rem;
+}
+
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    height: 500px;
+
+    gap: 2rem;
+}
+
+.header {
+    padding: 1rem 2rem;
+}
+
+.header--1 {
+    background: #A2D2FF;
+}
+
+.header--2 {
+    background: #CCD5AE;
+}
+
+.header--3 {
+    background: #FFC8DD;
+}
+
+.header--4 {
+    background: #CDB4DB;
+}
+
+.card {
+    overflow: hidden;
+    border-radius: 1rem;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s;
+}
+
+.card:hover {
+    transform: scale(103%);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.featured-clubs-header {
+    background: #ef476fff;
+}
+
+.featured-clubs-header p {
+    font-size: 24px;
+    font-weight: 500;
+    color: #FFFFFF;
+}
+
+.counter-container {
+    padding: 2rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+}
+
+.logout-btn-container {
+    margin-top: 2rem;
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+}

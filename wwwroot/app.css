@@ -113,3 +113,23 @@ a {
 .user-img {
     width: 86px;
 }
+
+.logout-btn {
+    color: #FFF;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 12px 20px;
+
+    background: #f03e3e;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 1rem;
+    transition: all 0.3s;
+    align-self: flex-start;
+
+    border: none;
+}
+
+.logout-btn:hover {
+    background: #e03131;
+}

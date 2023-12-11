@@ -8,6 +8,10 @@
 	transition: ease-out 0.3s;
 }
 
+.clubs-card:hover {
+    background: #EEEEEE;
+}
+
 .club-icon {
 	width: 52px;
 	margin-right: 1rem;
