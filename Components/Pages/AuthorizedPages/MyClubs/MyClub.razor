@@ -104,7 +104,7 @@
     {
         currentMember = LoggedUserSingleton.LoggedUser;
 
-        var queryResult = await _dbAccess.LoadDataAsList<Member, dynamic>($"SELECT * FROM users WHERE Username = '{currentMember.Name}'", new { }, _config.GetConnectionString("users"));
+        var queryResult = await _dbAccess.LoadDataAsList<Member, dynamic>($"SELECT * FROM users WHERE ID = '{currentMember.ID}'", new { }, _config.GetConnectionString("users"));
         currentMember = queryResult.ToList()[0];
     }
 
