@@ -4,12 +4,14 @@
 @layout Iskolaryo.Components.Layout.LoginLayout
 
 @using Iskolaryo.Auth
+@using Iskolaryo.Database
 @using Microsoft.AspNetCore.Components.Authorization
 
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject UserAccountService UserAccountService
 @inject NavigationManager NavigationManager
 @inject LoggedUserSingleton userSingleton
+@inject MemberDatabaseAccess memberDatabaseAccess
 
 <section class="login-section">
     <div class="login-container">
@@ -57,7 +59,7 @@
         }
 
         var customAuthStateProvider = (CustomAuthStateProvider)AuthenticationStateProvider;
-        var getMemberDetails = await UserAccountService.GetMemberDetails(Username);
+        var getMemberDetails = await memberDatabaseAccess.GetMemberDetails(Username);
         // var getMemberClubs = await UserAccountService.GetMemberClubs(Username);
         LoggedUserSingleton.LoggedUser = getMemberDetails;
         await customAuthStateProvider.UpdateAuthenticationState(new UserSession
