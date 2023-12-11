@@ -40,11 +40,12 @@ namespace Iskolaryo.Database
             }
         }
 
-        public Task ExecuteSQL<T>(string sql, T parameters, string connectionString)
+        public async Task ExecuteSQL<T>(string sql, T parameters, string connectionString)
         {
-            using(IDbConnection connection = new MySqlConnection(connectionString))
+
+            using (IDbConnection connection = new MySqlConnection(connectionString))
             {
-                return connection.ExecuteAsync(sql, parameters);
+                await connection.ExecuteAsync(sql, parameters).ConfigureAwait(false);
             }
         }
     }
