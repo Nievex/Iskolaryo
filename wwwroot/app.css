@@ -109,3 +109,7 @@ a {
 .fixed-height {
     height: 100%;
 }
+
+.user-img {
+    width: 86px;
+}

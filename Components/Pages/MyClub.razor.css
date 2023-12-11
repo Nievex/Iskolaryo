@@ -12,18 +12,22 @@
     width: 100%;
 }
 
-/* My Club Section */
-.myclub-section {
+.myclub--container {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
     max-width: 1280px;
     margin: 0 auto;
     padding: 4rem 6rem 0.5rem 6rem;
 }
+
+/* My Club Section */
 
 .messages-container {
     border-radius: 1rem;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     overflow: hidden;
     margin-bottom: 4rem;
+    margin-right: 2rem;
 }
 
 .club-messages-header {
@@ -43,7 +47,7 @@
     gap: 1rem;
     padding: 2rem 2rem;
     transition: ease-out 0.3s;
-    border-top: 2px solid #ddd;
+    border-top: 1px solid #ddd;
 }
 
 .user-profile {
@@ -68,10 +72,6 @@
     border-radius: 10px;
 }
 
-.user-img {
-    width: 86px;
-}
-
 .message-content {
     display: flex;
     flex-direction: column;
@@ -82,7 +82,7 @@
 }
 
 .message {
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .date {
@@ -166,4 +166,41 @@
 
 .reply-inputs input[type=submit]:hover {
     background-color: #548C85;
+}
+
+/* Members Section */
+
+.members-section {
+
+}
+
+.members-container {
+    border-radius: 1rem;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    margin-bottom: 4rem;
+}
+
+.member-cards {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    height: 100%;
+    overflow-y: visible;
+}
+
+.member-card {
+    padding: 1.3rem 1rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.member-card .user-img {
+    width: 42px;
+}
+
+.member-name {
+    font-size: 16px;
 }
