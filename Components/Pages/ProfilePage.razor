@@ -70,16 +70,16 @@
             <div class="update-container">
 
                 <p>Email: </p>
-                <input type="text" placeholder="New email" class="update-field" />
+                <input type="text" @bind-value="Email" @bind-value:event="oninput" placeholder="New email" class="update-field" />
 
                 <p>Phone number: </p>
-                <input type="text" placeholder="New phone number" class="update-field" />
+                <input type="text" @bind-value="PhoneNumber" @bind-value:event="oninput" placeholder="New phone number" class="update-field" />
 
                 <p>Old password: </p>
-                <input type="password" class="update-field" />
+                <input type="password" @bind-value="OldPassword" @bind-value:event="oninput" class="update-field" />
 
                 <p>New password: </p>
-                <input type="password" class="update-field" />
+                <input type="password" @bind-value="NewPassword" @bind-value:event="oninput" class="update-field" />
 
                 <input type="button" value="Update" class="update-btn" />
             </div>
@@ -90,6 +90,11 @@
 
 @code {
     private Member? currentUser; 
+
+    private string Email { get; set; }
+    private string PhoneNumber { get; set; }
+    private string OldPassword { get; set; }
+    private string NewPassword { get; set; }
 
     protected override void OnInitialized()
     {
