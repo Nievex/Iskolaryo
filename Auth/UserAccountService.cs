@@ -1,4 +1,5 @@
-﻿using Iskolaryo.Database;
+﻿using Iskolaryo.Components.Pages.AuthorizedPages.Clubs;
+using Iskolaryo.Database;
 
 namespace Iskolaryo.Auth
 {
@@ -16,6 +17,21 @@ namespace Iskolaryo.Auth
         public UserAccount? GetUserAccount(string username)
         {
             return _userAccounts.FirstOrDefault(u => u.Username == username);
+        }
+
+        public async Task<Member> GetMemberDetails(string username)
+        {
+            var query = @$"SELECT member.*, club.* FROM users member LEFT JOIN clubs.club_list club ON member.JoinedClubID = club.ID WHERE member.username = '{username}'";
+            var memberList = await _databaseAccess.LoadSingleJointData<Member, Club>(query, (member, club) => {
+                Console.WriteLine(club.Name);
+                Console.WriteLine(club.Description);
+                if(club.Name != null)
+                {
+                    member.Club = club;
+                }
+                return member;
+            }, _config.GetConnectionString("users"), "JoinedClubID");
+            return memberList.ToList()[0];
         }
     }
 }
