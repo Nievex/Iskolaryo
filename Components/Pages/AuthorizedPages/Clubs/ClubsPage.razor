@@ -288,7 +288,7 @@
     private List<Club>? clubList;
     protected override async Task OnInitializedAsync()
     {
-        string loadClubSQL = @"SELECT c.*, u.FirstName, u.LastName FROM club_list c INNER JOIN users.users u ON c.ModeratorID = u.ID; ";
+        string loadClubSQL = @"SELECT c.*, u.FirstName, u.LastName FROM club_list c INNER JOIN users.users u ON c.ModeratorID = u.ID WHERE c.isFeatured = 1; ";
         clubList = (List<Club>)await dbAccess.LoadSingleJointData<Club, Member>(loadClubSQL, (club, member) =>
         {
             Console.WriteLine(club);
