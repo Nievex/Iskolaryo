@@ -1,0 +1,73 @@
+﻿@page "/profile"
+
+<PageTitle>Profile</PageTitle>
+
+<section class="profile-section">
+    <div class="profile-container">
+        <div class="profile-header clubs-header">
+            <p>Your account</p>
+        </div>
+        <div class="profile-info">
+            <div class="left-panel">
+                <img src="/images/profile.svg" class="user-img" />
+            </div>
+
+            <div class="right-panel">
+                <p class="name">Name: <span>Testing sa mahabang name Testing sa mahabang name Testing sa mahabang name Testing sa mahabang name Testing sa mahabang name</span></p>
+                <p class="student-number">Student number: <span>22-2023</span></p>
+                <p class="email">Email: <span>username@gmail.com</span></p>
+                <p class="phone-number">Phone number: <span>09123123123</span></p>
+
+                <input type="button" class="logout-btn" value="Logout" />
+            </div>
+        </div>
+
+        <h1>Club joined</h1>
+        <div class="current-club">
+            
+            <div class="club-img">
+                <img src="/images/club.svg" class="club"/>
+            </div>
+
+            <div class="club-info">
+                <p class="club-name">Ordinary Club</p>
+                <p class="club-description">Lorem ipsum club</p>
+            </div>
+
+            <div class="leave-btn-container">
+                <input type="button" value="Leave" class="leave-btn" />
+            </div>
+
+        </div>
+
+        <h1>Edit profile</h1>
+        <div class="info-container">
+            <div class="img-container">
+                <img src="/images/profile.svg" class="user-img" />
+                <input type="button" value="Change" class="change-pic-btn" />
+            </div>
+
+            <div class="update-container">
+
+                <p>Email: </p>
+                <input type="text" placeholder="New email" class="update-field" />
+
+                <p>Phone number: </p>
+                <input type="text" placeholder="New phone number" class="update-field" />
+
+                <p>Old password: </p>
+                <input type="password" class="update-field" />
+
+                <p>New password: </p>
+                <input type="password" class="update-field" />
+
+                <input type="button" value="Update" class="update-btn" />
+            </div>
+
+        </div>
+    </div>
+</section>
+
+@code {
+
+}

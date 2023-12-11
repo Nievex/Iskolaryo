@@ -1,0 +1,207 @@
+﻿/* Profile Section */
+
+.profile-container h1 {
+    margin: 1rem 2rem 0 2rem;
+}
+
+.profile-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 4rem 6rem 8rem 6rem;
+}
+
+.profile-container {
+    border-radius: 1rem;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    margin-bottom: 4rem;
+}
+
+.profile-header {
+    background: #70A9A1;
+}
+
+.profile-header p {
+    font-size: 24px;
+    font-weight: 500;
+    color: #FFFFFF;
+}
+
+.profile-info {
+    padding: 2rem 1.5rem;
+
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+
+    border-bottom: 1px solid #eee;
+}
+
+.left-panel .user-img {
+    width: 128px;
+    height: 128px;
+}
+
+.right-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.right-panel p {
+    color: #AAAAAA;
+    font-size: 20px;
+}
+
+.right-panel p span {
+    color: #555;
+    font-weight: 500;
+}
+
+.logout-btn {
+    color: #FFF;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 12px 20px;
+
+    background: #f03e3e;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 1rem;
+    transition: all 0.3s;
+    align-self: flex-start;
+
+    border: none;
+}
+
+.logout-btn:hover {
+    background: #e03131;
+}
+
+/* Club Section */
+
+.current-club {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 2rem;
+    border-bottom: 1px solid #eee;
+}
+
+.club-img {
+    width: 52px;
+    margin-right: 2rem;
+}
+
+.club-info {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    justify-self: flex-start;
+    flex-grow: 1;
+    flex-wrap: wrap;
+}
+
+.club-name {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    word-wrap: anywhere;
+}
+
+.club-description {
+    color: #ADB5BD;
+}
+
+.leave-btn-container input[type=button] {
+    color: #FFF;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 12px 20px;
+    background: #f03e3e;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s;
+    border: none;
+}
+
+.leave-btn-container input[type=button]:hover {
+    background: #e03131;
+}
+
+.info-container {
+    padding: 2rem 2rem;
+    display: flex;
+}
+
+.img-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    border-right: 2px solid #ddd;
+    padding-right: 2rem;
+}
+
+.img-container img {
+    width: 86px;
+    height: 86px;
+}
+
+.change-pic-btn {
+    background-color: #70A9A1;
+    color: #FFFFFF;
+    padding: 12px 20px;
+    font-size: 18px;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 100%;
+    margin-bottom: 4rem;
+}
+
+.change-pic-btn:hover {
+    background-color: #548C85;
+}
+
+.update-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    padding: 0 1.4rem;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.update-container .update-field {
+    font-size: 18px;
+    padding: 6px 15px;
+    transition: all 0.3s;
+    width: 100%;
+    border: 2px solid #DDD;
+    border-radius: 10px;
+}
+
+.update-btn {
+    background-color: #70A9A1;
+    color: #FFFFFF;
+    padding: 12px 20px;
+    font-size: 18px;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 1rem;
+
+    justify-self: flex-end;
+    grid-column: 2;
+    grid-row: 5;
+}
+
+.update-btn:hover {
+    background-color: #548C85;
+}
