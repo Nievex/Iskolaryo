@@ -30,6 +30,7 @@ builder.Services.AddScoped<ProtectedSessionStorage>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
 builder.Services.AddSingleton<UserAccountService>();
 builder.Services.AddSingleton<DatabaseAccess>();
+builder.Services.AddSingleton<LoggedUserSingleton>();
 builder.Services.AddCascadingAuthenticationState();
 
 
