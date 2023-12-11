@@ -63,4 +63,12 @@
             });
         NavigationManager.NavigateTo("/home", true);
     }
+
+    public async Task Enter(KeyboardEventArgs e)
+    {
+        if(e.Code == "Enter" || e.Code == "NumpadEnter")
+        {
+            await Login();
+        }
+    }
 }
