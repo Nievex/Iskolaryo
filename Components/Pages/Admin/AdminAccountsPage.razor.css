@@ -38,12 +38,15 @@
     padding: 1rem 0;
 }
 
-.update-fields p {
-    font-size: 16px;
-    margin: 10px 0;
+.update-fields {
     display: flex;
     flex-direction: column;
     height: 100%;
+}
+
+.update-fields p {
+    font-size: 16px;
+    margin: 10px 0;
 }
 .update-fields input[type=text] {
     padding: 5px 10px;
