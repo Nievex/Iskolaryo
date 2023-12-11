@@ -18,7 +18,7 @@
                 <p class="email">Email: <span>username@gmail.com</span></p>
                 <p class="phone-number">Phone number: <span>09123123123</span></p>
 
-                <input type="button" class="logout-btn" value="Logout" />
+                <input type="button" @onclick="Logout" class="logout-btn" value="Logout" />
             </div>
         </div>
 
@@ -69,5 +69,11 @@
 </section>
 
 @code {
+    private async Task Logout()
+    {
+        var customAuthStateProvider = (CustomAuthStateProvider)AuthenticationStateProvider;
+        await customAuthStateProvider.UpdateAuthenticationState(null);
+        NavigationManager.NavigateTo("/login", true);
 
+}
 }
