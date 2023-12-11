@@ -2,10 +2,11 @@
 @using Iskolaryo.Components.Pages.AuthorizedPages.Clubs
 @using Microsoft.AspNetCore.Components.Authorization
 @using Iskolaryo.Auth
-
+@using Iskolaryo.Database
 
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavigationManager
+@inject MemberDatabaseAccess memberDatabaseAccess
 
 <AuthorizeView Roles="User,Admin">
     <NotAuthorized>
@@ -26,10 +27,10 @@
             </div>
 
             <div class="right-panel">
-                <p class="name">Name: <span>@currentUser!.Name</span></p>
-                <p class="student-number">Student number: <span>@currentUser!.ID</span></p>
-                <p class="email">Email: <span>@currentUser!.Email</span></p>
-                <p class="phone-number">Phone number: <span>@currentUser!.ContactNumber</span></p>
+                <p class="name">Name: <span>@currentUser?.Name</span></p>
+                <p class="student-number">Student number: <span>@currentUser?.ID</span></p>
+                <p class="email">Email: <span>@currentUser?.Email</span></p>
+                <p class="phone-number">Phone number: <span>@currentUser?.ContactNumber</span></p>
 
                 <input type="button" @onclick="Logout" class="logout-btn" value="Logout" />
             </div>
@@ -81,7 +82,7 @@
                 <p>New password: </p>
                 <input type="password" @bind-value="NewPassword" @bind-value:event="oninput" class="update-field" />
 
-                <input type="button" value="Update" class="update-btn" />
+                <input type="button" @onclick="Update" value="Update" class="update-btn" />
             </div>
 
         </div>
@@ -100,6 +101,23 @@
     {
         currentUser = LoggedUserSingleton.LoggedUser;
 
+    }
+
+    private async Task Update()
+    {
+        string oldPassword = await memberDatabaseAccess.GetMemberPassword(currentUser!.ID);
+        Console.WriteLine(oldPassword);
+        if (OldPassword != oldPassword)
+        {
+            Console.WriteLine("Invalid Password");
+            Email = "";
+            PhoneNumber = "";
+            OldPassword = "";
+            NewPassword = "";
+            return;
+        }
+        await memberDatabaseAccess.UpdateMemberDetails(currentUser.ID, Email, PhoneNumber, NewPassword);
+        Console.WriteLine("Done!");
     }
 
     private async Task Logout()
