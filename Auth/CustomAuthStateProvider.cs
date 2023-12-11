@@ -36,7 +36,7 @@ namespace Iskolaryo.Auth
         // <summary>
         // Updates the user details in the session storage and notifies the AuthenticationStateProvider that the authentication state has changed
         // </summary>
-        public async Task UpdateAuthenticationState(UserSession userSession)
+        public async Task UpdateAuthenticationState(UserSession? userSession)
         {
             ClaimsPrincipal claimsPrincipal;
 
