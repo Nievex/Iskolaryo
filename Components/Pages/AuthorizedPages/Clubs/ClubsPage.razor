@@ -23,12 +23,12 @@
         <div class="featured-clubs-header clubs-header">
             <p>Featured Clubs</p>
         </div>
-        @if(clubList == null)
+        @if(featuredClubList == null)
         {
             <p>Loading...</p>
         } else
         {
-            @foreach(var club in clubList)
+            @foreach(var club in featuredClubList)
             {
                 <ClubComponent Club="club" />
             };
@@ -106,7 +106,19 @@
             </div>
         </a>
 
-        <div class="clubs-card">
+        @if(notFeaturedClubList == null)
+        {
+            <p>Loading...</p>
+        }
+        else
+        {
+            @foreach(var club in notFeaturedClubList)
+            {
+                <ClubComponent Club="club" />
+            };
+        }
+
+        @* <div class="clubs-card">
             <img src="/images/club.svg" class="club-icon" />
             <div class="club-info">
                 <p class="club-name">Ordinary Club</p>
@@ -280,25 +292,36 @@
                 <img src="images/profile.svg" class="moderator-picture" />
                 <p class="moderator-name">Profile Account</p>
             </div>
-        </div>
+        </div> *@
     </div>
 </section>
 
 @code {
-    private List<Club>? clubList;
+    private List<Club>? featuredClubList;
+    private List<Club>? notFeaturedClubList;
     protected override async Task OnInitializedAsync()
     {
-        string loadClubSQL = @"SELECT c.*, u.FirstName, u.LastName FROM club_list c INNER JOIN users.users u ON c.ModeratorID = u.ID WHERE c.isFeatured = 1; ";
-        clubList = (List<Club>)await dbAccess.LoadSingleJointData<Club, Member>(loadClubSQL, (club, member) =>
+        string loadFeaturedClubSQL = @"SELECT c.*, u.FirstName, u.LastName FROM club_list c INNER JOIN users.users u ON c.ModeratorID = u.ID WHERE c.isFeatured = 1; ";
+        featuredClubList = (List<Club>)await dbAccess.LoadSingleJointData<Club, Member>(loadFeaturedClubSQL, (club, member) =>
         {
             Console.WriteLine(club);
             club.Moderator = member;
             return club;
         }, _config.GetConnectionString("clubs"), "ModeratorID");
 
-        foreach(var club in clubList)
+        foreach(var club in featuredClubList)
         {
             Console.WriteLine(club.Moderator.Name);
         };
+
+        string loadClubSQL = @"SELECT c.*, u.FirstName, u.LastName FROM club_list c INNER JOIN users.users u ON c.ModeratorID = u.ID WHERE c.isFeatured = 0; ";
+        var notFeaturedClubEnumerable = await dbAccess.LoadSingleJointData<Club, Member>(loadClubSQL, (club, member) =>
+        {
+            Console.WriteLine(club);
+            club.Moderator = member;
+            return club;
+        }, _config.GetConnectionString("clubs"), "ModeratorID");
+        notFeaturedClubList = notFeaturedClubEnumerable.ToList();
+        
     }
 }
