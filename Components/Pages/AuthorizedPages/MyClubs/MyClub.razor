@@ -1,0 +1,122 @@
+﻿@page "/myclub"
+@using Iskolaryo.Components.Pages.AuthorizedPages.Clubs
+@using Iskolaryo.Database
+@using Iskolaryo.Auth
+@using Microsoft.AspNetCore.Components.Authorization
+
+@inject DatabaseAccess _dbAccess
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IConfiguration _config;
+
+<PageTitle>My Club</PageTitle>
+
+<section class="myclub-hero-section">
+    <div class="hero">
+        <img src="/images/gamedevbanner.png" />
+    </div>
+</section>
+
+<div class="center-text container">
+    <span class="subheading">CLUBS</span>
+    <h1 class="primary">Game Development</h1>
+    <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin venenatis risus velit, vitae dignissim eros ultricies non. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Morbi metus neque, finibus a nunc ut, commodo venenatis magna.</p>
+</div>
+
+
+<section class="myclub-section">
+    <div class="messages-container">
+        <div class="club-messages-header clubs-header">
+            <p>Messages</p>
+        </div>
+
+        <div class="user-message-card">
+            <div class="fixed-height">
+                <div class="user-profile">
+                    <img class="user-img" src="/images/profile.svg" />
+                    <p class="username">Juan Dela Cruz</p>
+                    <p class="user-role">Club Member</p>
+                </div>
+            </div>
+            <div class="message-content">
+                <p class="message">Nunc facilisis nulla at metus scelerisque egestas. Maecenas ut laoreet nulla. Nunc rhoncus lacus ut mattis hendrerit. Donec at placerat tellus, quis rhoncus ex. Praesent ultrices at mi a sodales.</p>
+                <p class="date">December 25, 2023</p>
+            </div>
+        </div>
+
+        <div class="user-message-card">
+            <div class="fixed-height">
+                <div class="user-profile">
+                    <img class="user-img" src="/images/profile.svg" />
+                    <p class="username">Testing sa mahabang name</p>
+                    <p class="user-role">Club Member</p>
+                </div>
+            </div>
+            <div class="message-content">
+                <p class="message">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam placerat est eu nisi commodo fringilla. Donec maximus viverra tortor, ac dignissim nisl congue vel. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Maecenas venenatis diam sed purus consectetur, non convallis elit auctor. Nullam fermentum turpis vitae nibh feugiat, lacinia dignissim sem tincidunt. Maecenas tempus posuere arcu id sodales. Suspendisse porttitor nisl a nisl ultrices laoreet.
+
+                    Morbi at ullamcorper tellus. Maecenas velit metus, iaculis quis risus at, lobortis tempus purus. Nunc consectetur vestibulum tristique. Donec iaculis, sem et ultrices fermentum, leo ex vulputate turpis, ac lacinia lorem sapien id massa. Donec blandit id turpis ut semper. Nulla eget nisi vitae ligula pretium imperdiet. In et ante in eros ullamcorper euismod. Integer luctus posuere eros, eget posuere ante. Donec id elementum libero, sed facilisis ex. Nullam faucibus quam et velit vestibulum, et rhoncus velit viverra.
+
+                    Suspendisse pharetra lacus a consequat faucibus. Duis blandit ultrices risus. Etiam tristique porta leo eget sagittis. Etiam et arcu maximus, finibus dui nec, vestibulum nulla. Sed tempor ultrices ligula sed scelerisque. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Suspendisse a mi sed neque congue auctor. Proin viverra massa sed risus consectetur placerat. Suspendisse sagittis faucibus ligula vitae fringilla. Etiam ac volutpat tortor. Duis faucibus sed sem nec pellentesque. Curabitur euismod ac lectus a feugiat.
+                </p>
+                <p class="date">December 25, 2023</p>
+            </div>
+        </div>
+        @foreach (var messageCard in _messageCardList)
+        {
+            <MessageCard user="@messageCard.user" Message="@messageCard.Message" />
+        }
+
+    </div>
+</section>
+
+<section class="reply-section">
+    <div class="reply-container">
+        <div class="reply-header clubs-header">
+            <p>Reply</p>
+        </div>
+
+        <div class="user-reply">
+            <div class="fixed-height">
+                <div class="user-profile">
+                    <img class="user-img" src="/images/profile.svg" />
+                    <p class="username">Current User</p>
+                    <p class="user-role">Club Member</p>
+                </div>
+            </div>
+
+            <div class="reply-inputs">
+                <textarea class="reply-fld" @bind="message" placeholder="Write something..." ></textarea>
+                <button @onclick="AddMessageCard" type="submit" class="submit-btn" >Submit</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+    private List<MessageCard> _messageCardList = new List<MessageCard>();
+    private string? message;
+
+    public Member? currentMember;
+
+    protected async override Task OnInitializedAsync()
+    {
+        var customAuthStateProvider = (CustomAuthStateProvider)AuthenticationStateProvider;
+        var userSessionState = await customAuthStateProvider.GetAuthenticationStateAsync();
+        string userSessionUsername = userSessionState.User.Identity!.Name!;
+
+        var queryResult = await _dbAccess.LoadDataAsList<Member, dynamic>($"SELECT * FROM users WHERE Username = '{userSessionUsername}'", new { }, _config.GetConnectionString("users"));
+        currentMember = queryResult.ToList()[0];
+    }
+
+    private void AddMessageCard()
+    {
+        _messageCardList.Add(new MessageCard()
+        {
+            user = currentMember!,
+            Message = message
+        });
+
+        message = "";
+    }
+}
