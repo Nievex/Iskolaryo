@@ -21,5 +21,17 @@ namespace Iskolaryo.Database
             }, _config.GetConnectionString("users"), "JoinedClubID");
             return memberList.ToList()[0];
         }
+
+        public async Task<string> GetMemberPassword(string ID)
+        {
+            string query = @$"SELECT Password FROM users WHERE ID = '{ID}'";
+            return await _databaseAccess.LoadData<string, dynamic>(query, new { }, _config.GetConnectionString("users"));
+        }
+
+        public async Task UpdateMemberDetails(string ID, string email, string contactNumber, string password)
+        {
+            string query = @$"UPDATE users SET Email = '{email}', ContactNumber = '{contactNumber}', Password = '{password}' WHERE ID = '{ID}'";
+            await _databaseAccess.ExecuteSQL<dynamic>(query, new { }, _config.GetConnectionString("users"));
+        }
     }
 }
