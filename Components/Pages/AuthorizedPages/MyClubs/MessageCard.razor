@@ -1,0 +1,28 @@
+﻿@using Iskolaryo.Components.Pages.AuthorizedPages.Clubs
+@using Microsoft.AspNetCore.Components.Authorization
+@using System.ComponentModel.DataAnnotations
+
+<div class="user-message-card">
+    <div class="fixed-height">
+        <div class="user-profile">
+            <img class="user-img" src="/images/profile.svg" />
+            <p class="username">@user.Name</p>
+            <p class="user-role">@user.Role</p>
+        </div>
+    </div>
+    <div class="message-content">
+        <p class="message">
+            @Message    
+        </p>
+        <p class="date">@DateTime.Today;</p>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    [Required]
+    public Member user { get; set; }
+
+    [Parameter]
+    public string? Message { get; set; }
+}
