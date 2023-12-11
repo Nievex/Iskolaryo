@@ -9,6 +9,7 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject UserAccountService UserAccountService
 @inject NavigationManager NavigationManager
+@inject LoggedUserSingleton userSingleton
 
 <section class="login-section">
     <div class="login-container">
@@ -56,6 +57,9 @@
         }
 
         var customAuthStateProvider = (CustomAuthStateProvider)AuthenticationStateProvider;
+        var getMemberDetails = await UserAccountService.GetMemberDetails(Username);
+        // var getMemberClubs = await UserAccountService.GetMemberClubs(Username);
+        LoggedUserSingleton.LoggedUser = getMemberDetails;
         await customAuthStateProvider.UpdateAuthenticationState(new UserSession
             {
                 Username = Username,
