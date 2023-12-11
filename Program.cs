@@ -24,6 +24,7 @@ builder.Services
     .AddFontAwesomeIcons();
 
 builder.Services.AddSignalR(builder => builder.MaximumReceiveMessageSize = 1000000000);
+
 builder.Services.AddServerSideBlazor();
 
 builder.Services.AddAuthenticationCore();
