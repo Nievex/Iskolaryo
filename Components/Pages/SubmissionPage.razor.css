@@ -1,0 +1,84 @@
+﻿.club-submission-section {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 4rem 6rem 8rem 6rem;
+}
+
+.submission-container {
+    border-radius: 1rem;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    margin-bottom: 4rem;
+}
+
+.submission-header {
+    background: #70A9A1;
+}
+
+.submission-header p {
+    font-size: 24px;
+    font-weight: 500;
+    color: #FFFFFF;
+}
+
+form {
+    padding: 2rem 2rem;
+}
+
+.form-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.field select {
+    padding: 8px 12px;
+    font-size: 16px;
+
+    transition: all 0.3s;
+}
+
+.field input[type=text] {
+    padding: 8px 12px;
+    font-size: 16px;
+}
+
+.field textarea {
+    height: 120px;
+    padding: 8px 12px;
+    font-size: 17px;
+    resize: none;
+
+    margin-bottom: 2rem;
+}
+
+.submit-btn-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.submit-btn {
+    background-color: #70A9A1;
+    color: #FFFFFF;
+    padding: 14px 20px;
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+
+    justify-self: flex-end;
+    transition: all 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #548C85;
+}

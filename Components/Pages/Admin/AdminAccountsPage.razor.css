@@ -9,7 +9,7 @@
 }
 
 .data-container {
-    height: 100vh;
+    height: 72%;
     overflow-y: auto;
     margin: 0 auto;
     border-bottom: 1px solid black;
