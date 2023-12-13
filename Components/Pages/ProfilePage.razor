@@ -107,17 +107,36 @@
     {
         string oldPassword = await memberDatabaseAccess.GetMemberPassword(currentUser!.ID);
         Console.WriteLine(oldPassword);
-        if (OldPassword != oldPassword)
+        if(string.IsNullOrEmpty(OldPassword) && string.IsNullOrEmpty(NewPassword))
         {
-            Console.WriteLine("Invalid Password");
+            Console.WriteLine("Done updating email and phone number!");
+            await memberDatabaseAccess.UpdateMemberDetails(currentUser.ID, Email, PhoneNumber, oldPassword);
+        }
+        else if (OldPassword != oldPassword && string.IsNullOrEmpty(NewPassword))
+        {
+            Console.WriteLine("Fill out the new password if you wish to change your password!");
             Email = "";
             PhoneNumber = "";
             OldPassword = "";
             NewPassword = "";
             return;
         }
-        await memberDatabaseAccess.UpdateMemberDetails(currentUser.ID, Email, PhoneNumber, NewPassword);
-        Console.WriteLine("Done!");
+        else if (OldPassword != oldPassword && !string.IsNullOrEmpty(NewPassword))
+        {
+            Console.WriteLine("Invalid old password");
+            Email = "";
+            PhoneNumber = "";
+            OldPassword = "";
+            NewPassword = "";
+            return;
+        } 
+        else
+        {
+            await memberDatabaseAccess.UpdateMemberDetails(currentUser.ID, Email, PhoneNumber, NewPassword);
+            Console.WriteLine("Done!");
+        }
+        LoggedUserSingleton.LoggedUser = await memberDatabaseAccess.GetMember(currentUser.ID);
+
     }
 
     private async Task Logout()

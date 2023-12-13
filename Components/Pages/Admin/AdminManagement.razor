@@ -1,0 +1,226 @@
+﻿@page "/admins-management"
+
+@using Iskolaryo.Database;
+@inject DatabaseAccess dbAccess;
+@inject IConfiguration _config;
+@inject MemberDatabaseAccess memberDatabaseAccess
+
+<PageTitle>Admins Management</PageTitle>
+
+<section class="admin-accounts-section">
+    <p class="alert error" style="display: @(showError ? "inline-block" : "none"); background-color: red;">
+        *user already exists or the fields are empty
+    </p>
+    <p class="alert success" style="display: @(showSuccess ? "inline-block" : "none"); background-color: green;">
+        *Success
+    </p>
+
+    <div class="admin-accounts-container">
+        <div class="data-container">
+            <table class="data-table">
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>FirstName</th>
+                    <th>LastName</th>
+                    <th>Email</th>
+                    <th>ContactNumber</th>
+                    <th>Role</th>
+                </tr>
+                @if (adminAccounts != null)
+                {
+                    @foreach (var admin in adminAccounts)
+                    {
+                        <tr @onclick="() => SelectAdmin(admin)">
+                            <td>@admin.ID</td>
+                            <td>@admin.Username</td>
+                            <td>@admin.Password</td>
+                            <td>@admin.FirstName</td>
+                            <td>@admin.LastName</td>
+                            <td>@admin.Email</td>
+                            <td>@admin.ContactNumber</td>
+                            <td>@admin.Role</td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+
+        <div class="update-container">
+            <div class="update-fields">
+
+                <div>
+                    <p>ID</p>
+                    <input type="text" @bind="selectedAdmin.ID" />
+                </div>
+                <div>
+                    <p>Username</p>
+                    <input type="text" @bind="selectedAdmin.Username" />
+                </div>
+                <div>
+                    <p>Password</p>
+                    <input type="text" @bind="selectedAdmin.Password" />
+                </div>
+                <div>
+                    <p>FirstName</p>
+                    <input type="text" @bind="selectedAdmin.FirstName" />
+                </div>
+                <div>
+                    <p>LastName</p>
+                    <input type="text" @bind="selectedAdmin.LastName" />
+                </div>
+                <div>
+                    <p>Email</p>
+                    <input type="text" @bind="selectedAdmin.Email" />
+                </div>
+                <div>
+                    <p>ContactNumber</p>
+                    <input type="text" @bind="selectedAdmin.ContactNumber" />
+                </div>
+                <div>
+                    <p>Role</p>
+                    <input type="text" @bind="selectedAdmin.Role" />
+                </div>
+
+                <div class="btn-container">
+                    <input type="button" value="Create" class="update-btn" @onclick="CreateAdminAsync" />
+                    <input type="button" value="Update" class="update-btn" @onclick="UpdateAdminAsync" />
+                    <input type="button" value="Clear" class="delete-btn" @onclick="ClearFields" />
+                    <input type="button" value="Delete" class="delete-btn" @onclick="DeleteAdminAsync" />
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+@code {
+    private List<Admins>? adminAccounts;
+    private Admins selectedAdmin = new Admins();
+
+    private string errorMessage = "";
+    private bool showError = false;
+
+    private string successMessage = "";
+    private bool showSuccess = false;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        adminAccounts = await memberDatabaseAccess.GetAdminsAsync();
+    }
+
+    private void SelectAdmin(Admins admin)
+    {
+        selectedAdmin = admin;
+    }
+
+    private async Task CreateAdminAsync()
+    {
+        if (string.IsNullOrWhiteSpace(selectedAdmin.Username) || string.IsNullOrWhiteSpace(selectedAdmin.Password))
+        {
+            SetError("Error: User fields cannot be empty.");
+            ClearSuccess();
+            return;
+        }
+        else
+        {
+            SetSuccess("Changes made successfully!");
+            ClearError();
+        }
+
+        bool userExists = await memberDatabaseAccess.CheckIfUserExistsAsync(selectedAdmin.Username);
+        if (userExists)
+        {
+            SetError("Error: User already exists.");
+            ClearSuccess();
+            return;
+        }
+        else
+        {
+            SetSuccess("Changes made successfully!");
+            ClearError();
+        }
+
+        await memberDatabaseAccess.CreateAdminAsync(selectedAdmin);
+        ClearFields();
+        adminAccounts = await memberDatabaseAccess.GetAdminsAsync();
+        await Task.Delay(2000);
+        ClearError();
+        ClearSuccess();
+    }
+
+    private async Task UpdateAdminAsync()
+    {
+        if (string.IsNullOrWhiteSpace(selectedAdmin.Username) || string.IsNullOrWhiteSpace(selectedAdmin.Password))
+        {
+            SetError("Error: User fields cannot be empty.");
+            ClearSuccess();
+            return;
+        }
+        else
+        {
+            SetSuccess("Changes made successfully!");
+            ClearError();
+        }
+
+        bool usernameExistsForOtherUser = await memberDatabaseAccess.CheckIfUsernameExistsAsync(selectedAdmin.ID, selectedAdmin.Username);
+        if (usernameExistsForOtherUser)
+        {
+            SetError("Error: Username already exists for another user.");
+            ClearSuccess();
+            return;
+        }
+        else
+        {
+            SetSuccess("Changes made successfully!");
+            ClearError();
+        }
+
+        await memberDatabaseAccess.UpdateAdminAsync(selectedAdmin);
+        ClearFields();
+        adminAccounts = await memberDatabaseAccess.GetAdminsAsync();
+        await Task.Delay(2000);
+        ClearError();
+        ClearSuccess();
+    }
+
+    private void ClearFields()
+    {
+        selectedAdmin = new Admins();
+    }
+
+    private async Task DeleteAdminAsync()
+    {
+        await memberDatabaseAccess.DeleteAdminAsync(selectedAdmin.ID);
+        ClearFields();
+        adminAccounts = await memberDatabaseAccess.GetAdminsAsync();
+    }
+
+    private void SetError(string message)
+    {
+        errorMessage = message;
+        showError = true;
+    }
+
+    private void ClearError()
+    {
+        errorMessage = "";
+        showError = false;
+    }
+
+    private void SetSuccess(string message)
+    {
+        successMessage = message;
+        showSuccess = true;
+    }
+
+    private void ClearSuccess()
+    {
+        successMessage = "";
+        showSuccess = false;
+    }
+}

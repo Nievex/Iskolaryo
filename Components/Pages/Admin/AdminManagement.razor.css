@@ -1,0 +1,146 @@
+﻿.admin-accounts-section {
+    margin: 0 auto;
+    position: relative;
+}
+
+.alert {
+    position: sticky;
+    top: 0;
+    display: inline-block;
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0;
+    text-align: center;
+    color: white;
+    transition: all 0.3s;
+}
+
+.error {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.success {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.admin-accounts-container {
+    margin-bottom: 4rem;
+    overflow-y: visible;
+}
+
+.data-container {
+    margin: 0 auto;
+    height: 70vh;
+    overflow-y: auto;
+
+    border-top: 1px solid black;
+}
+
+.data-container table, th, td {
+    border: 1px solid;
+    text-align: center;
+}
+
+.data-container table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.data-container th,
+.data-container td {
+    padding: 12px 6px;
+}
+
+.data-container tr {
+    cursor: pointer;
+}
+
+.data-container tr:hover {
+    background: #EEE;
+}
+
+.update-container {
+    padding-top: 1rem;
+    border-top: 1px solid black;
+}
+
+.update-fields h1 {
+    padding: 1rem 0;
+}
+
+.update-fields {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    height: 100%;
+
+
+    padding: 0 9rem;
+}
+
+.update-fields p {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.update-fields input[type=text] {
+    padding: 10px 12px;
+    font-size: 16px;
+    width: 100%;
+}
+
+.update-fields input[type=checkbox] {
+    width: 24px;
+    height: 24px;
+}
+
+.update-btn {
+    background-color: #70A9A1;
+    color: #FFFFFF;
+    padding: 12px 20px;
+    font-size: 18px;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 1rem;
+
+    width: 102px;
+}
+
+.update-btn:hover {
+    background-color: #548C85;
+}
+
+.delete-btn {
+    background-color: #F03e3e;
+    color: #FFFFFF;
+    padding: 12px 20px;
+    font-size: 18px;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 1rem;
+    width: 102px;
+}
+
+.delete-btn:hover {
+    background-color: #e03131;
+}
+
+.btn-container {
+    grid-column: 3 / 4;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+
+    justify-items: center;
+}

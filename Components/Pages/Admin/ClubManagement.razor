@@ -1,0 +1,208 @@
+﻿@page "/clubs-management"
+
+@using Iskolaryo.Database;
+@inject DatabaseAccess dbAccess;
+@inject IConfiguration _config;
+@inject MemberDatabaseAccess memberDatabaseAccess
+
+<PageTitle>Clubs Management</PageTitle>
+
+<section class="admin-accounts-section">
+    <p class="alert error" style="display: @(showError ? "inline-block" : "none"); background-color: red;">
+        *user already exists or the fields are empty
+    </p>
+    <p class="alert success" style="display: @(showSuccess ? "inline-block" : "none"); background-color: green;">
+        *Success
+    </p>
+
+    <div class="admin-accounts-container">
+        <div class="data-container">
+            <table class="data-table">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>isFeatured</th>
+                    <th>ModeratorID</th>
+                </tr>
+                @if (clubsList != null)
+                {
+                    @foreach (var club in clubsList)
+                    {
+                        <tr @onclick="() => SelectClub(club)">
+                            <td>@club.ID</td>
+                            <td>@club.Name</td>
+                            <td>@club.Description</td>
+                            <td>@club.isFeatured</td>
+                            <td>@club.ModeratorID</td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+
+        <div class="update-container">
+            <div class="update-fields">
+
+                <div>
+                    <p>ID</p>
+                    <input type="text" @bind="selectedClub.ID" />
+                </div>
+                <div>
+                    <p>Name</p>
+                    <input type="text" @bind="selectedClub.Name" />
+                </div>
+                <div>
+                    <p>Description</p>
+                    <input type="text" @bind="selectedClub.Description" />
+                </div>
+                <div>
+                    <p>isFeatured</p>
+                    <input type="checkbox" @bind="selectedClub.isFeatured" />
+                </div>
+                <div>
+                    <p>ModeratorID</p>
+                    <input type="text" @bind="selectedClub.ModeratorID" />
+                </div>
+
+                <div class="btn-container">
+                    <input type="button" value="Create" class="update-btn" @onclick="CreateClubAsync" />
+                    <input type="button" value="Update" class="update-btn" @onclick="UpdateClubAsync" />
+                    <input type="button" value="Clear" class="delete-btn" @onclick="ClearFields" />
+                    <input type="button" value="Delete" class="delete-btn" @onclick="DeleteClubAsync" />
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+</section>
+
+@code {
+    private List<Clubs>? clubsList;
+    private Clubs selectedClub = new Clubs();
+
+    private string errorMessage = "";
+    private bool showError = false;
+
+    private string successMessage = "";
+    private bool showSuccess = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        clubsList = await memberDatabaseAccess.GetClubsListAsync();
+    }
+
+    private void SelectClub(Clubs club)
+    {
+        selectedClub = club;
+    }
+
+    private async Task CreateClubAsync()
+    {
+        if (string.IsNullOrWhiteSpace(selectedClub.Name))
+        {
+            SetError("");
+            ClearSuccess();
+            return;
+        }
+        else
+        {
+            SetSuccess("");
+            ClearError();
+        }
+
+        bool clubExists = await memberDatabaseAccess.CheckIfClubExistsAsync(selectedClub.Name);
+        if (clubExists)
+        {
+            SetError("");
+            ClearSuccess();
+            return;
+        }
+        else
+        {
+            SetSuccess("");
+            ClearError();
+        }
+
+        await memberDatabaseAccess.CreateClubsAsync(selectedClub);
+        ClearFields();
+        clubsList = await memberDatabaseAccess.GetClubsListAsync();
+        await Task.Delay(2000);
+        ClearError();
+        ClearSuccess();
+    }
+
+    private async Task UpdateClubAsync()
+    {
+        if (string.IsNullOrWhiteSpace(selectedClub.Name))
+        {
+            SetError("");
+            ClearSuccess();
+            return;
+        }
+        else
+        {
+            SetSuccess("");
+            ClearError();
+        }
+
+        bool clubIDExists = await memberDatabaseAccess.CheckIfClubExistsAsync(selectedClub.ID);
+        if (clubIDExists)
+        {
+            SetError("");
+            ClearSuccess();
+            return;
+        }
+        else
+        {
+            SetSuccess("");
+            ClearError();
+        }
+
+        await memberDatabaseAccess.UpdateClubAsync(selectedClub);
+        ClearFields();
+        clubsList = await memberDatabaseAccess.GetClubsListAsync();
+        await Task.Delay(2000);
+        ClearError();
+        ClearSuccess();
+    }
+
+    private void ClearFields()
+    {
+        selectedClub = new Clubs();
+    }
+
+    private async Task DeleteClubAsync()
+    {
+        await memberDatabaseAccess.DeleteClubAsync(selectedClub.ID);
+        ClearFields();
+        clubsList = await memberDatabaseAccess.GetClubsListAsync();
+    }
+
+    private void SetError(string message)
+    {
+        errorMessage = message;
+        showError = true;
+    }
+
+    private void ClearError()
+    {
+        errorMessage = "";
+        showError = false;
+    }
+
+    private void SetSuccess(string message)
+    {
+        successMessage = message;
+        showSuccess = true;
+    }
+
+    private void ClearSuccess()
+    {
+        successMessage = "";
+        showSuccess = false;
+    }
+}

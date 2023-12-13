@@ -1,0 +1,233 @@
+﻿@page "/users-management"
+
+@using Iskolaryo.Database;
+@inject DatabaseAccess dbAccess;
+@inject IConfiguration _config;
+@inject MemberDatabaseAccess memberDatabaseAccess
+
+<PageTitle>Users Management</PageTitle>
+
+<section class="admin-accounts-section">
+        <p class="alert error" style="display: @(showError ? "inline-block" : "none"); background-color: red;">
+            *user already exists or the fields are empty
+        </p>
+        <p class="alert success" style="display: @(showSuccess ? "inline-block" : "none"); background-color: green;">
+            *Success
+        </p>
+
+    <div class="admin-accounts-container">
+        <div class="data-container">
+            <table class="data-table">
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>FirstName</th>
+                    <th>LastName</th>
+                    <th>Email</th>
+                    <th>ContactNumber</th>
+                    <th>Role</th>
+                    <th>JoinedClubID</th>
+                </tr>
+                @if (userAccounts != null)
+                {
+                    @foreach (var user in userAccounts)
+                    {
+                        <tr @onclick="() => SelectUser(user)">
+                            <td>@user.ID</td>
+                            <td>@user.Username</td>
+                            <td>@user.Password</td>
+                            <td>@user.FirstName</td>
+                            <td>@user.LastName</td>
+                            <td>@user.Email</td>
+                            <td>@user.ContactNumber</td>
+                            <td>@user.Role</td>
+                            <td>@user.JoinedClubID</td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+
+        <div class="update-container">
+            <div class="update-fields">
+
+                <div>
+                    <p>ID</p>
+                    <input type="text" @bind="selectedUser.ID" />
+                </div>
+                <div>
+                    <p>Username</p>
+                    <input type="text" @bind="selectedUser.Username" />
+                </div>
+                <div>
+                    <p>Password</p>
+                    <input type="text" @bind="selectedUser.Password" />
+                </div>
+                <div>
+                    <p>FirstName</p>
+                    <input type="text" @bind="selectedUser.FirstName" />
+                </div>
+                <div>
+                    <p>LastName</p>
+                    <input type="text" @bind="selectedUser.LastName" />
+                </div>
+                <div>
+                    <p>Email</p>
+                    <input type="text" @bind="selectedUser.Email" />
+                </div>
+                <div>
+                    <p>ContactNumber</p>
+                    <input type="text" @bind="selectedUser.ContactNumber" />
+                </div>
+                <div>
+                    <p>Role</p>
+                    <input type="text" @bind="selectedUser.Role" />
+                </div>
+                <div>
+                    <p>JoinedClubID</p>
+                    <input type="text" @bind="selectedUser.JoinedClubID" />
+                </div>
+
+                <div class="btn-container">
+                    <input type="button" value="Create" class="update-btn" @onclick="CreateUserAsync" />
+                    <input type="button" value="Update" class="update-btn" @onclick="UpdateUserAsync" />
+                    <input type="button" value="Clear" class="delete-btn" @onclick="ClearFields" />
+                    <input type="button" value="Delete" class="delete-btn" @onclick="DeleteUserAsync" />
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+</section>
+
+@code {
+    private List<Users>? userAccounts;
+    private Users selectedUser = new Users();
+
+    private string errorMessage = "";
+    private bool showError = false;
+
+    private string successMessage = "";
+    private bool showSuccess = false;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        userAccounts = await memberDatabaseAccess.GetUsersAsync();
+    }
+
+    private void SelectUser(Users user)
+    {
+        selectedUser = user;
+    }
+
+    private async Task CreateUserAsync()
+    {
+        if (string.IsNullOrWhiteSpace(selectedUser.Username) || string.IsNullOrWhiteSpace(selectedUser.Password))
+        {
+            SetError("Error: User fields cannot be empty.");
+            ClearSuccess();
+            return;
+        }
+        else
+        {
+            SetSuccess("Changes made successfully!");
+            ClearError();
+        }
+
+        bool userExists = await memberDatabaseAccess.CheckIfUserExistsAsync(selectedUser.Username);
+        if (userExists)
+        {
+            SetError("Error: User already exists.");
+            ClearSuccess();
+            return;
+        }
+        else
+        {
+            SetSuccess("Changes made successfully!");
+            ClearError();
+        }
+
+        await memberDatabaseAccess.CreateUserAsync(selectedUser);
+        ClearFields();
+        userAccounts = await memberDatabaseAccess.GetUsersAsync();
+        await Task.Delay(2000);
+        ClearError();
+        ClearSuccess();
+    }
+
+    private async Task UpdateUserAsync()
+    {
+        if (string.IsNullOrWhiteSpace(selectedUser.Username) || string.IsNullOrWhiteSpace(selectedUser.Password))
+        {
+            SetError("Error: User fields cannot be empty.");
+            ClearSuccess();
+            return;
+        }
+        else
+        {
+            SetSuccess("Changes made successfully!");
+            ClearError();
+        }
+
+        bool usernameExistsForOtherUser = await memberDatabaseAccess.CheckIfUsernameExistsAsync(selectedUser.ID, selectedUser.Username);
+        if (usernameExistsForOtherUser)
+        {
+            SetError("Error: Username already exists for another user.");
+            ClearSuccess();
+            return;
+        }
+        else
+        {
+            SetSuccess("Changes made successfully!");
+            ClearError();
+        }
+
+        await memberDatabaseAccess.UpdateUserAsync(selectedUser);
+        ClearFields();
+        userAccounts = await memberDatabaseAccess.GetUsersAsync();
+        await Task.Delay(2000);
+        ClearError();
+        ClearSuccess();
+    }
+
+    private void ClearFields()
+    {
+        selectedUser = new Users();
+    }
+
+    private async Task DeleteUserAsync()
+    {
+        await memberDatabaseAccess.DeleteUserAsync(selectedUser.ID);
+        ClearFields();
+        userAccounts = await memberDatabaseAccess.GetUsersAsync();
+    }
+
+    private void SetError(string message)
+    {
+        errorMessage = message;
+        showError = true;
+    }
+
+    private void ClearError()
+    {
+        errorMessage = "";
+        showError = false;
+    }
+
+    private void SetSuccess(string message)
+    {
+        successMessage = message;
+        showSuccess = true;
+    }
+
+    private void ClearSuccess()
+    {
+        successMessage = "";
+        showSuccess = false;
+    }
+}

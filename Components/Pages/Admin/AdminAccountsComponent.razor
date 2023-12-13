@@ -1,0 +1,31 @@
+﻿@using System.ComponentModel.DataAnnotations
+
+<table class="data-table">
+    <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>FirstName</th>
+        <th>LastName</th>
+        <th>Email</th>
+        <th>ContactNumber</th>
+        <th>Role</th>
+    </tr>
+    <tr>
+        <td>@Users.ID</td>
+        <td>@Users.Username</td>
+        <td>@Users.Password</td>
+        <td>@Users.FirstName</td>
+        <td>@Users.LastName</td>
+        <td>@Users.Email</td>
+        <td>@Users.ContactNumber</td>
+        <td>@Users.Role</td>
+        <td>@Users.JoinedClubID</td>
+    </tr>
+</table>
+
+@code {
+    [Parameter]
+    [Required]
+    public Users Users { get; set; }
+}

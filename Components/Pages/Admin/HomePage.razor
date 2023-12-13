@@ -1,5 +1,10 @@
 ﻿@page "/admin-home"
 
+@using Iskolaryo.Database;
+@inject DatabaseAccess dbAccess;
+@inject IConfiguration _config;
+@inject MemberDatabaseAccess memberDatabaseAccess
+
 <PageTitle>Admin Panel</PageTitle>
 
 <div class="admin-container center-text">
@@ -11,37 +16,37 @@
 <section class="admin-dashboard-section">
     <div class="dashboard-container">
         <div class="dashboard-cards">
-            <a href="/manage-admins" class="card">
+            <a href="/admins-management" class="card">
                 <div class="header--1 header">
                     <h1>Manage admin accounts</h1>
                 </div>
 
                 <div class="counter-container">
-                    <p>Total admin account: </p><span>100</span>
+                    <p>Total admin accounts: </p><span>@(adminAccounts?.Count ?? 0)</span>
                 </div>
             </a>
 
-            <a href="/manage-users" class="card">
+            <a href="/users-management" class="card">
                 <div class="header--2 header">
                     <h1>Manage user accounts</h1>
                 </div>
 
                 <div class="counter-container">
-                    <p>Total user account: </p><span>100</span>
+                    <p>Total admin accounts: </p><span>@(userAccounts?.Count ?? 0)</span>
                 </div>
             </a>
 
-            <a href="/manage-clubs" class="card">
+            <a href="/clubs-management" class="card">
                 <div class="header--3 header">
                     <h1>Manage clubs</h1>
                 </div>
 
                 <div class="counter-container">
-                    <p>Total clubs: </p><span>100</span>
+                    <p>Total admin accounts: </p><span>@(clubsList?.Count ?? 0)</span>
                 </div>
             </a>
 
-            <a href="/manage-events" class="card">
+            <a href="/events-management" class="card">
                 <div class="header--4 header">
                     <h1>Manage events</h1>
                 </div>
@@ -57,3 +62,35 @@
         </div>
     </div>
 </section>
+
+@code {
+    private List<Admins>? adminAccounts;
+    private List<Users>? userAccounts;
+    private List<Clubs>? clubsList;
+
+    private Admins selectedAdmin = new Admins();
+    private Users selectedUser = new Users();
+    private Clubs selectedClub = new Clubs();
+
+    protected override async Task OnInitializedAsync()
+    {
+        adminAccounts = await memberDatabaseAccess.GetAdminsAsync();
+        userAccounts = await memberDatabaseAccess.GetUsersAsync();
+        clubsList = await memberDatabaseAccess.GetClubsListAsync();
+    }
+
+    private void SelectAdmin(Admins admin)
+    {
+        selectedAdmin = admin;
+    }
+
+    private void SelectUser(Users user)
+    {
+        selectedUser = user;
+    }
+
+    private void SelectUser(Clubs club)
+    {
+        selectedClub = club;
+    }
+}

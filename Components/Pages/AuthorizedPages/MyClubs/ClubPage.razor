@@ -1,15 +1,17 @@
-﻿@page "/myclub"
+﻿@page "/clubs/{ClubID:int}"
+
 @using Iskolaryo.Components.Pages.AuthorizedPages.Clubs
 @using Iskolaryo.Database
 @using Iskolaryo.Auth
 @using Microsoft.AspNetCore.Components.Authorization
-
+@inject NavigationManager NavigationManager
 @inject DatabaseAccess _dbAccess
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IConfiguration _config;
 @inject LoggedUserSingleton __usersingleton
+@inject MemberDatabaseAccess memberDatabaseAccess
 
-<PageTitle>My Club</PageTitle>
+<PageTitle>@selectedClub.Name (ID: @ClubID)</PageTitle>
 
 <section class="myclub-hero-section">
     <div class="hero">
@@ -19,8 +21,8 @@
 
 <div class="center-text container">
     <span class="subheading">CLUBS</span>
-    <h1 class="primary">Game Development</h1>
-    <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin venenatis risus velit, vitae dignissim eros ultricies non. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Morbi metus neque, finibus a nunc ut, commodo venenatis magna.</p>
+    <h1 class="primary">@selectedClub.Name</h1>
+    <p class="description">@selectedClub.Description</p>
 </div>
 
 <div class="myclub--container">
@@ -99,6 +101,10 @@
 </section>
 
 @code {
+    private List<ClubsInfo>? clubsList;
+    private ClubsInfo selectedClub = new ClubsInfo();
+    private int ClubID;
+
     private List<MessageCard> _messageCardList = new List<MessageCard>();
     private string? message;
 
@@ -111,7 +117,24 @@
         var queryResult = await _dbAccess.LoadDataAsList<Member, dynamic>($"SELECT * FROM users WHERE ID = '{currentMember.ID}'", new { }, _config.GetConnectionString("users"));
         currentMember = queryResult.ToList()[0];
 
+        clubsList = await memberDatabaseAccess.GetClubsURLAsync();
+        ClubID = GetClubIDFromUri();
+        selectedClub = clubsList?.FirstOrDefault(c => c.ID == ClubID) ?? new ClubsInfo();
     }
+
+    private int GetClubIDFromUri()
+    {
+        var uriSegments = NavigationManager.Uri.Split('/');
+        var clubIDSegment = uriSegments.LastOrDefault(segment => !string.IsNullOrWhiteSpace(segment));
+
+        if (int.TryParse(clubIDSegment, out int clubID))
+        {
+            return clubID;
+        }
+
+        return 0;
+    }
+
 
     private void AddMessageCard()
     {
@@ -122,5 +145,10 @@
         });
 
         message = "";
+    }
+
+    private void SelectClub(ClubsInfo club)
+    {
+        selectedClub = club;
     }
 }
