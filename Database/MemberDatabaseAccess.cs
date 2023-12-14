@@ -130,7 +130,7 @@ namespace Iskolaryo.Database
 
         public async Task CreateAdminAsync(Admins admin)
         {
-            string insertQuery = @"INSERT INTO users (ID, Username, Password, FirstName, LastName, Email, ContactNumber, Role, JoinedClubID) VALUES (@ID, @Username, @Password, @FirstName, @LastName, @Email, @ContactNumber, @Role, @JoinedClubID)";
+            string insertQuery = @"INSERT INTO users (ID, Username, Password, FirstName, LastName, Email, ContactNumber, Role) VALUES (@ID, @Username, @Password, @FirstName, @LastName, @Email, @ContactNumber, @Role)";
             await _databaseAccess.ExecuteSQL(insertQuery, admin, _config.GetConnectionString("users"));
         }
 
