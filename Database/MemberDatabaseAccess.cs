@@ -8,6 +8,13 @@ namespace Iskolaryo.Database
     {
         private IConfiguration _config = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: false, reloadOnChange: true).Build();
         private readonly DatabaseAccess _databaseAccess = new DatabaseAccess();
+        private readonly string _usersConnectionString, _clubsConnectionString;
+
+        public MemberDatabaseAccess()
+        {
+            _usersConnectionString = _config.GetConnectionString("users")!;
+            _clubsConnectionString = _config.GetConnectionString("clubs")!;
+        }
 
         public async Task<Member> GetMemberDetailsByUsername(string username)
         {
@@ -20,7 +27,7 @@ namespace Iskolaryo.Database
                     member.Club = club;
                 }
                 return member;
-            }, _config.GetConnectionString("users"), "JoinedClubID");
+            }, _usersConnectionString, "JoinedClubID");
             return memberList.ToList()[0];
         }
 
@@ -36,64 +43,64 @@ namespace Iskolaryo.Database
                     member.Club = club;
                 }
                 return member;
-            }, _config.GetConnectionString("users"), "JoinedClubID");
+            }, _usersConnectionString, "JoinedClubID");
             return memberList.ToList()[0];
         }   
 
         public async Task<string> GetMemberPassword(string ID)
         {
             string query = @$"SELECT Password FROM users WHERE ID = '{ID}'";
-            return await _databaseAccess.LoadData<string, dynamic>(query, new { }, _config.GetConnectionString("users"));
+            return await _databaseAccess.LoadData<string, dynamic>(query, new { }, _usersConnectionString);
         }
 
         public async Task UpdateMemberDetails(string ID, string email, string contactNumber, string password)
         {
             string query = @$"UPDATE users SET Email = '{email}', ContactNumber = '{contactNumber}', Password = '{password}' WHERE ID = '{ID}'";
-            await _databaseAccess.ExecuteSQL<dynamic>(query, new { }, _config.GetConnectionString("users"));
+            await _databaseAccess.ExecuteSQL<dynamic>(query, new { }, _usersConnectionString);
         }
 
         public async Task<Member> GetMember(string ID)
         {
             string query = $@"SELECT * FROM users WHERE ID ='{ID}'";
-            return await _databaseAccess.LoadData<Member, dynamic>(query, new { }, _config.GetConnectionString("users"));
+            return await _databaseAccess.LoadData<Member, dynamic>(query, new { }, _usersConnectionString);
         }
 
         // Users
         public async Task<List<Users>> GetUsersAsync()
         {
             string query = @"SELECT * FROM users WHERE Role = 'User'";
-            return (await _databaseAccess.LoadDataAsList<Users, object>(query, null, _config.GetConnectionString("users"))).ToList();
+            return (await _databaseAccess.LoadDataAsList<Users, object>(query, null, _usersConnectionString)).ToList();
         }
 
         public async Task CreateUserAsync(Users user)
         {
             string insertQuery = @"INSERT INTO users (ID, Username, Password, FirstName, LastName, Email, ContactNumber, Role, JoinedClubID) VALUES (@ID, @Username, @Password, @FirstName, @LastName, @Email, @ContactNumber, @Role, @JoinedClubID)";
-            await _databaseAccess.ExecuteSQL(insertQuery, user, _config.GetConnectionString("users"));
+            await _databaseAccess.ExecuteSQL(insertQuery, user, _usersConnectionString);
         }
 
         public async Task UpdateUserAsync(Users user)
         {
             string updateQuery = @"UPDATE users SET Username = @Username, Password = @Password, FirstName = @FirstName, LastName = @LastName, Email = @Email, ContactNumber = @ContactNumber, Role = @Role, JoinedClubID = @JoinedClubID WHERE ID = @ID";
-            await _databaseAccess.ExecuteSQL(updateQuery, user, _config.GetConnectionString("users"));
+            await _databaseAccess.ExecuteSQL(updateQuery, user, _usersConnectionString);
         }
 
         public async Task DeleteUserAsync(string userID)
         {
             string deleteQuery = @"DELETE FROM users WHERE ID = @UserID";
-            await _databaseAccess.ExecuteSQL(deleteQuery, new { UserID = userID }, _config.GetConnectionString("users"));
+            await _databaseAccess.ExecuteSQL(deleteQuery, new { UserID = userID }, _usersConnectionString);
         }
 
         public async Task<bool> CheckIfUserExistsAsync(string username)
         {
             string query = $"SELECT COUNT(*) FROM users WHERE Username = '{username}'";
-            int count = await _databaseAccess.LoadData<int, dynamic>(query, new { }, _config.GetConnectionString("users"));
+            int count = await _databaseAccess.LoadData<int, dynamic>(query, new { }, _usersConnectionString);
             return count > 0;
         }
 
         public async Task<bool> CheckIfUsernameExistsAsync(string ID, string username)
         {
             string query = $"SELECT COUNT(*) FROM users WHERE ID != '{ID}' AND Username = '{username}'";
-            int count = await _databaseAccess.LoadData<int, dynamic>(query, new { }, _config.GetConnectionString("users"));
+            int count = await _databaseAccess.LoadData<int, dynamic>(query, new { }, _usersConnectionString);
             return count > 0;
         }
 
@@ -102,38 +109,40 @@ namespace Iskolaryo.Database
         public async Task<List<Clubs>> GetClubsListAsync()
         {
             string query = @"SELECT * FROM club_list";
-            return (await _databaseAccess.LoadDataAsList<Clubs, object>(query, null, _config.GetConnectionString("clubs"))).ToList();
+            return (await _databaseAccess.LoadDataAsList<Clubs, object>(query, null, _clubsConnectionString)).ToList();
         }
 
         public async Task CreateClubsAsync(Clubs club)
         {
             string insertQuery = @"INSERT INTO club_list (ID, Name, Description, isFeatured, ModeratorID) VALUES (@ID, @Name, @Description, @isFeatured, @ModeratorID)";
-            await _databaseAccess.ExecuteSQL(insertQuery, club, _config.GetConnectionString("clubs"));
+            await _databaseAccess.ExecuteSQL(insertQuery, club, _clubsConnectionString);
         }
 
         public async Task UpdateClubAsync(Clubs club)
         {
+            Console.WriteLine(club.Name);
+            Console.WriteLine(club.Description);
             string updateQuery = @"UPDATE club_list SET Name = @Name, Description = @Description, isFeatured = @isFeatured, ModeratorID = @ModeratorID WHERE ID = @ID";
-            await _databaseAccess.ExecuteSQL(updateQuery, club, _config.GetConnectionString("clubs"));
+            await _databaseAccess.ExecuteSQL(updateQuery, club, _clubsConnectionString);
         }
 
         public async Task DeleteClubAsync(string clubID)
         {
             string deleteQuery = @"DELETE FROM club_list WHERE ID = @ClubID";
-            await _databaseAccess.ExecuteSQL<dynamic>(deleteQuery, new { ClubID = clubID }, _config.GetConnectionString("clubs"));
+            await _databaseAccess.ExecuteSQL<dynamic>(deleteQuery, new { ClubID = clubID }, _clubsConnectionString);
         }
 
         public async Task<bool> CheckIfClubExistsAsync(string Name)
         {
             string query = $"SELECT COUNT(*) FROM club_list WHERE Name = '{Name}'";
-            int count = await _databaseAccess.LoadData<int, dynamic>(query, new { }, _config.GetConnectionString("clubs"));
+            int count = await _databaseAccess.LoadData<int, dynamic>(query, new { }, _clubsConnectionString);
             return count > 0;
         }
 
         public async Task<bool> CheckIfClubNameAsync(string ID, string Name)
         {
             string query = $"SELECT COUNT(*) FROM club_list WHERE ID != '{ID}' AND Name = '{Name}'";
-            int count = await _databaseAccess.LoadData<int, dynamic>(query, new { }, _config.GetConnectionString("clubs"));
+            int count = await _databaseAccess.LoadData<int, dynamic>(query, new { }, _clubsConnectionString);
             return count > 0;
         }
 
@@ -141,38 +150,38 @@ namespace Iskolaryo.Database
         public async Task<List<Admins>> GetAdminsAsync()
         {
             string query = @"SELECT * FROM users WHERE Role = 'Admin'";
-            return (await _databaseAccess.LoadDataAsList<Admins, object>(query, null, _config.GetConnectionString("users"))).ToList();
+            return (await _databaseAccess.LoadDataAsList<Admins, object>(query, null, _usersConnectionString)).ToList();
         }
 
         public async Task CreateAdminAsync(Admins admin)
         {
             string insertQuery = @"INSERT INTO users (ID, Username, Password, FirstName, LastName, Email, ContactNumber, Role, JoinedClubID) VALUES (@ID, @Username, @Password, @FirstName, @LastName, @Email, @ContactNumber, @Role, @JoinedClubID)";
-            await _databaseAccess.ExecuteSQL(insertQuery, admin, _config.GetConnectionString("users"));
+            await _databaseAccess.ExecuteSQL(insertQuery, admin, _usersConnectionString);
         }
 
         public async Task UpdateAdminAsync(Admins admin)
         {
             string updateQuery = @"UPDATE users SET Username = @Username, Password = @Password, FirstName = @FirstName, LastName = @LastName, Email = @Email, ContactNumber = @ContactNumber, Role = @Role, JoinedClubID = @JoinedClubID WHERE ID = @ID";
-            await _databaseAccess.ExecuteSQL(updateQuery, admin, _config.GetConnectionString("users"));
+            await _databaseAccess.ExecuteSQL(updateQuery, admin, _usersConnectionString);
         }
 
         public async Task DeleteAdminAsync(string userID)
         {
             string deleteQuery = @"DELETE FROM users WHERE ID = @UserID AND Role = 'Admin'";
-            await _databaseAccess.ExecuteSQL<dynamic>(deleteQuery, new { UserID = userID }, _config.GetConnectionString("users"));
+            await _databaseAccess.ExecuteSQL<dynamic>(deleteQuery, new { UserID = userID }, _usersConnectionString);
         }
 
         public async Task<bool> CheckIfAdminExistsAsync(string username)
         {
             string query = $"SELECT COUNT(*) FROM users WHERE Username = '{username}'";
-            int count = await _databaseAccess.LoadData<int, dynamic>(query, new { }, _config.GetConnectionString("users"));
+            int count = await _databaseAccess.LoadData<int, dynamic>(query, new { }, _usersConnectionString);
             return count > 0;
         }
 
         public async Task<bool> CheckIfAdminNameExistsAsync(string ID, string username)
         {
             string query = $"SELECT COUNT(*) FROM users WHERE ID != '{ID}' AND Username = '{username}'";
-            int count = await _databaseAccess.LoadData<int, dynamic>(query, new { }, _config.GetConnectionString("users"));
+            int count = await _databaseAccess.LoadData<int, dynamic>(query, new { }, _usersConnectionString);
             return count > 0;
         }
 
@@ -180,7 +189,7 @@ namespace Iskolaryo.Database
         public async Task<List<ClubsInfo>> GetClubsURLAsync()
         {
             string query = @"SELECT * FROM club_list";
-            return (await _databaseAccess.LoadDataAsList<ClubsInfo, object>(query, null, _config.GetConnectionString("clubs"))).ToList();
+            return (await _databaseAccess.LoadDataAsList<ClubsInfo, object>(query, null, _clubsConnectionString)).ToList();
         }
     }
 }
