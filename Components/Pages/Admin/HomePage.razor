@@ -58,7 +58,7 @@
         </div>
 
         <div class="logout-btn-container">
-            <input type="button" value="Logout" class="logout-btn" />
+            <input @onclick="Logout" type="button" value="Logout" class="logout-btn" />
         </div>
     </div>
 </section>
@@ -92,5 +92,13 @@
     private void SelectUser(Clubs club)
     {
         selectedClub = club;
+    }
+
+    private async Task Logout()
+    {
+        var customAuthStateProvider = (CustomAuthStateProvider)authenticationStateProvider;
+        await customAuthStateProvider.UpdateAuthenticationState(null);
+        navigationManager.NavigateTo("/login", true);
+
     }
 }
