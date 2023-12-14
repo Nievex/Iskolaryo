@@ -24,6 +24,22 @@ namespace Iskolaryo.Database
             return memberList.ToList()[0];
         }
 
+        public async Task<Member> GetMemberDetailsByID(string ID)
+        {
+            string query = @$"SELECT member.*, club.* FROM users member LEFT JOIN clubs.club_list club ON member.JoinedClubID = club.ID WHERE member.ID = '{ID}'";
+            IEnumerable<Member> memberList = await _databaseAccess.LoadSingleJointData<Member, Club>(query, (member, club) =>
+            {
+                Console.WriteLine(club.Name);
+                Console.WriteLine(club.Description);
+                if (club.Name != null)
+                {
+                    member.Club = club;
+                }
+                return member;
+            }, _config.GetConnectionString("users"), "JoinedClubID");
+            return memberList.ToList()[0];
+        }   
+
         public async Task<string> GetMemberPassword(string ID)
         {
             string query = @$"SELECT Password FROM users WHERE ID = '{ID}'";
