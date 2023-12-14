@@ -100,13 +100,13 @@
     protected override void OnInitialized()
     {
         currentUser = LoggedUserSingleton.LoggedUser;
-
     }
 
     private async Task Update()
     {
         string oldPassword = await memberDatabaseAccess.GetMemberPassword(currentUser!.ID);
-        Console.WriteLine(oldPassword);
+        PhoneNumber = string.IsNullOrEmpty(PhoneNumber) ? currentUser!.ContactNumber : PhoneNumber;
+        Email = string.IsNullOrEmpty(Email) ? currentUser!.Email : Email;
         if(string.IsNullOrEmpty(OldPassword) && string.IsNullOrEmpty(NewPassword))
         {
             Console.WriteLine("Done updating email and phone number!");
@@ -135,7 +135,7 @@
             await memberDatabaseAccess.UpdateMemberDetails(currentUser.ID, Email, PhoneNumber, NewPassword);
             Console.WriteLine("Done!");
         }
-        LoggedUserSingleton.LoggedUser = await memberDatabaseAccess.GetMember(currentUser.ID);
+        LoggedUserSingleton.LoggedUser = await memberDatabaseAccess.GetMemberDetailsByID(currentUser.ID);
 
     }
 

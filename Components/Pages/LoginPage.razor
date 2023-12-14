@@ -60,7 +60,7 @@
         }
 
         var customAuthStateProvider = (CustomAuthStateProvider)AuthenticationStateProvider;
-        var getMemberDetails = await memberDatabaseAccess.GetMemberDetails(Username);
+        var getMemberDetails = await memberDatabaseAccess.GetMemberDetailsByUsername(Username);
         // var getMemberClubs = await UserAccountService.GetMemberClubs(Username);
         LoggedUserSingleton.LoggedUser = getMemberDetails;
         await customAuthStateProvider.UpdateAuthenticationState(new UserSession
@@ -68,6 +68,11 @@
                 Username = Username,
                 Role = user.Role
             });
+        if(user.Role == "Admin")
+        {
+            NavigationManager.NavigateTo("/admin-home", true);
+            return;
+        }
         NavigationManager.NavigateTo("/home", true);
     }
 

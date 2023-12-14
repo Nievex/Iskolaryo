@@ -1,9 +1,19 @@
 ﻿@page "/admin-home"
 
+@using Microsoft.AspNetCore.Components.Authorization;
 @using Iskolaryo.Database;
+@using Iskolaryo.Auth;
 @inject DatabaseAccess dbAccess;
 @inject IConfiguration _config;
 @inject MemberDatabaseAccess memberDatabaseAccess
+@inject AuthenticationStateProvider authenticationStateProvider
+@inject NavigationManager navigationManager
+
+<AuthorizeView Roles="Admin">
+    <NotAuthorized>
+        <RedirectToLogin />
+    </NotAuthorized>
+</AuthorizeView>
 
 <PageTitle>Admin Panel</PageTitle>
 
@@ -32,7 +42,7 @@
                 </div>
 
                 <div class="counter-container">
-                    <p>Total admin accounts: </p><span>@(userAccounts?.Count ?? 0)</span>
+                    <p>Total existing users: </p><span>@(userAccounts?.Count ?? 0)</span>
                 </div>
             </a>
 
@@ -42,7 +52,7 @@
                 </div>
 
                 <div class="counter-container">
-                    <p>Total admin accounts: </p><span>@(clubsList?.Count ?? 0)</span>
+                    <p>Total Existing clubs: </p><span>@(clubsList?.Count ?? 0)</span>
                 </div>
             </a>
 
@@ -58,7 +68,7 @@
         </div>
 
         <div class="logout-btn-container">
-            <input type="button" value="Logout" class="logout-btn" />
+            <input @onclick="Logout" type="button" value="Logout" class="logout-btn" />
         </div>
     </div>
 </section>
@@ -92,5 +102,13 @@
     private void SelectUser(Clubs club)
     {
         selectedClub = club;
+    }
+
+    private async Task Logout()
+    {
+        var customAuthStateProvider = (CustomAuthStateProvider)authenticationStateProvider;
+        await customAuthStateProvider.UpdateAuthenticationState(null);
+        navigationManager.NavigateTo("/login", false);
+
     }
 }
