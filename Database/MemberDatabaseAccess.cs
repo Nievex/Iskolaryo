@@ -104,7 +104,7 @@ namespace Iskolaryo.Database
         public async Task DeleteClubAsync(string clubID)
         {
             string deleteQuery = @"DELETE FROM club_list WHERE ID = @ClubID";
-            await _databaseAccess.ExecuteSQL(deleteQuery, new { ClubID = clubID }, _config.GetConnectionString("clubs"));
+            await _databaseAccess.ExecuteSQL<dynamic>(deleteQuery, new { ClubID = clubID }, _config.GetConnectionString("clubs"));
         }
 
         public async Task<bool> CheckIfClubExistsAsync(string Name)
@@ -143,7 +143,7 @@ namespace Iskolaryo.Database
         public async Task DeleteAdminAsync(string userID)
         {
             string deleteQuery = @"DELETE FROM users WHERE ID = @UserID AND Role = 'Admin'";
-            await _databaseAccess.ExecuteSQL(deleteQuery, new { UserID = userID }, _config.GetConnectionString("users"));
+            await _databaseAccess.ExecuteSQL<dynamic>(deleteQuery, new { UserID = userID }, _config.GetConnectionString("users"));
         }
 
         public async Task<bool> CheckIfAdminExistsAsync(string username)
