@@ -9,7 +9,7 @@ namespace Iskolaryo.Database
         private IConfiguration _config = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: false, reloadOnChange: true).Build();
         private readonly DatabaseAccess _databaseAccess = new DatabaseAccess();
 
-        public async Task<Member> GetMemberDetails(string username)
+        public async Task<Member> GetMemberDetailsByUsername(string username)
         {
             string query = @$"SELECT member.*, club.* FROM users member LEFT JOIN clubs.club_list club ON member.JoinedClubID = club.ID WHERE member.username = '{username}'";
             IEnumerable<Member> memberList = await _databaseAccess.LoadSingleJointData<Member, Club>(query, (member, club) => {
