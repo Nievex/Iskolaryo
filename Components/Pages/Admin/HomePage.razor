@@ -108,7 +108,7 @@
     {
         var customAuthStateProvider = (CustomAuthStateProvider)authenticationStateProvider;
         await customAuthStateProvider.UpdateAuthenticationState(null);
-        navigationManager.NavigateTo("/login", true);
+        navigationManager.NavigateTo("/login", false);
 
     }
 }
