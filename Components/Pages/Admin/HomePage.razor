@@ -1,9 +1,19 @@
 ﻿@page "/admin-home"
 
+@using Microsoft.AspNetCore.Components.Authorization;
 @using Iskolaryo.Database;
+@using Iskolaryo.Auth;
 @inject DatabaseAccess dbAccess;
 @inject IConfiguration _config;
 @inject MemberDatabaseAccess memberDatabaseAccess
+@inject AuthenticationStateProvider authenticationStateProvider
+@inject NavigationManager navigationManager
+
+<AuthorizeView Roles="Admin">
+    <NotAuthorized>
+        <RedirectToLogin />
+    </NotAuthorized>
+</AuthorizeView>
 
 <PageTitle>Admin Panel</PageTitle>
 
