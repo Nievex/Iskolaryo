@@ -68,6 +68,11 @@
                 Username = Username,
                 Role = user.Role
             });
+        if(user.Role == "Admin")
+        {
+            NavigationManager.NavigateTo("/admin-home", true);
+            return;
+        }
         NavigationManager.NavigateTo("/home", true);
     }
 
