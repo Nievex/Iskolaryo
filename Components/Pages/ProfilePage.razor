@@ -100,7 +100,6 @@
     protected override void OnInitialized()
     {
         currentUser = LoggedUserSingleton.LoggedUser;
-
     }
 
     private async Task Update()
@@ -136,7 +135,7 @@
             await memberDatabaseAccess.UpdateMemberDetails(currentUser.ID, Email, PhoneNumber, NewPassword);
             Console.WriteLine("Done!");
         }
-        LoggedUserSingleton.LoggedUser = await memberDatabaseAccess.GetMember(currentUser.ID);
+        LoggedUserSingleton.LoggedUser = await memberDatabaseAccess.GetMemberDetailsByID(currentUser.ID);
 
     }
 
