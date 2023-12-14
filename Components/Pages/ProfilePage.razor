@@ -106,7 +106,8 @@
     private async Task Update()
     {
         string oldPassword = await memberDatabaseAccess.GetMemberPassword(currentUser!.ID);
-        Console.WriteLine(oldPassword);
+        PhoneNumber = string.IsNullOrEmpty(PhoneNumber) ? currentUser!.ContactNumber : PhoneNumber;
+        Email = string.IsNullOrEmpty(Email) ? currentUser!.Email : Email;
         if(string.IsNullOrEmpty(OldPassword) && string.IsNullOrEmpty(NewPassword))
         {
             Console.WriteLine("Done updating email and phone number!");
